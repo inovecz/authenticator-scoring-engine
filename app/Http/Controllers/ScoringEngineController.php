@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use Jenssegers\Agent\Agent;
 use App\Models\LoginAttemp;
 use Illuminate\Http\Request;
+use App\Services\LoginService;
 use Illuminate\Http\JsonResponse;
 use App\Services\ScoreEntityService;
-use Illuminate\Support\Facades\Http;
 use App\Services\ScorePasswordService;
 use Adrianorosa\GeoLocation\GeoLocation;
-use Illuminate\Http\Client\ConnectionException;
 
 class ScoringEngineController extends Controller
 {
@@ -32,7 +31,8 @@ class ScoringEngineController extends Controller
         }
 
         try {
-            $loginData = $this->getLoginAttempData($entity, $clientIp, $userAgent);
+            $loginService = new LoginService();
+            $loginData = $loginService->getLoginAttempData($entity, $clientIp, $userAgent);
             $loginScore = 0;
 
             $scorePassword = $this->scorePassword($password);
@@ -81,42 +81,5 @@ class ScoringEngineController extends Controller
             'historical' => $historicalScore,
             'score' => $entityScore,
         ];
-    }
-
-    private function getLoginAttempData(string $entity, string $clientIp, string $userAgent): array
-    {
-        $agent = new Agent();
-        $agent->setUserAgent($userAgent);
-
-        $device = match (true) {
-            $agent->isDesktop() => 'desktop',
-            $agent->isTablet() => 'tablet',
-            $agent->isMobile() => 'mobile',
-            default => 'unknown'
-        };
-        return array_merge(
-            [
-                'entity' => $entity,
-                'ip' => $clientIp
-            ],
-            $this->getGeoData($clientIp),
-            [
-                'device' => $device,
-                'os' => $agent->platform() ?: 'unknown',
-                'browser' => $agent->browser() ?: 'unknown'
-            ]
-        );
-    }
-
-    private function getGeoData(string $ip): array
-    {
-        $geoData = GeoLocation::lookup($ip)->toArray();
-        if (isset($geoData['countryCode'])) {
-            $geoData['country_code'] = $geoData['countryCode'];
-            unset($geoData['countryCode']);
-        }
-        return $geoData ?: [];
-        // $response = Http::timeout(3)->get('https://geolocation-db.com/json/')->json();
-        // return $response ?? [];
     }
 }
