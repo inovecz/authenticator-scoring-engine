@@ -4,33 +4,73 @@ namespace App\Services;
 
 use Illuminate\Validation\NotPwnedVerifier;
 
-class ScorePasswordService
+class ScorePasswordService extends ScoreService
 {
-    public int $maxScore = 60;
-
-    /** @return int scoreUncompromised (Unccmpromised = 0, Compromised = 20) */
-    public function scoreUncompromised(string $password, int $allowedLeaks = 0): int
+    public function scorePassword(string $password): array
     {
+        $passwordScore = 0;
+
+        $leaksScore = $this->scoreLeaks($password);
+        $passwordScore += $leaksScore;
+
+        $lengthScore = $this->scoreLength($password);
+        $passwordScore += $lengthScore;
+
+        $complexityScore = $this->scoreComplexity($password);
+        $passwordScore += $complexityScore;
+
+        return [
+            'leaks' => $leaksScore,
+            'length' =>  $lengthScore,
+            'complexity' => $complexityScore,
+            'score' => $passwordScore,
+        ];
+    }
+
+    /**
+     * @maxMethodScore 20
+     * @return int scoreLeaked (Not leaked = 0, Leaked = 20)
+     */
+    private function scoreLeaks(string $password, int $allowedLeaks = 0): int
+    {
+        $maxLeaksScore = $this->getMethodMaxScore(__FUNCTION__);
         return (new NotPwnedVerifier(new \Illuminate\Http\Client\Factory()))->verify([
             'value' => $password,
             'threshold' => $allowedLeaks,
-        ]) ? 0 : 20;
+        ]) ? 0 : $maxLeaksScore;
     }
 
-    /** @return int scoreLength (Best = 0, Worst = 20) */
-    public function scoreLength(string $password): int
+    /**
+     * @maxMethodScore 20
+     * @return int scoreLength (Best = 0, Worst = 20)
+     */
+    private function scoreLength(string $password): int
     {
+        $maxLengthScore = $this->getMethodMaxScore(__FUNCTION__);
         $length = mb_strlen($password);
-        return $length >= 20 ? 0 : 20 - $length;
+        return $length >= $maxLengthScore ? 0 : $maxLengthScore - $length;
     }
 
-    /** @return int scoreComplexity (Best = 0, Worst = 20) */
-    public function scoreComplexity(string $password): int
+    /**
+     * @maxMethodScore 20
+     * @return int scoreComplexity (Best = 0, Worst = 20)
+     */
+    private function scoreComplexity(string $password): int
     {
-        $hasNumbers = preg_match('/\pN/u', $password);
-        $hasLetters = preg_match('/\pL/u', $password);
-        $hasMixedCase = preg_match('/(\p{Ll}+.*\p{Lu})|(\p{Lu}+.*\p{Ll})/u', $password);
-        $hasSymbols = preg_match('/\p{Z}|\p{S}|\p{P}/u', $password);
-        return 20 - ($hasNumbers + $hasLetters + $hasMixedCase + $hasSymbols) * 5;
+        $maxComplexityScore = $this->getMethodMaxScore(__FUNCTION__);
+
+        $tests = [
+            'has_numbers' => '/\pN/u',
+            'has_letters' => '/\pL/u',
+            'has_mixed_case' => '/(\p{Ll}+.*\p{Lu})|(\p{Lu}+.*\p{Ll})/u',
+            'has_symbols' => '/\p{Z}|\p{S}|\p{P}/u'
+        ];
+
+        $passed = 0;
+        foreach ($tests as $dummy => $regex) {
+            $passed += preg_match($regex, $password) ? 1 : 0;
+        }
+
+        return (int) $maxComplexityScore - ($passed) * ($maxComplexityScore / count($tests));
     }
 }
