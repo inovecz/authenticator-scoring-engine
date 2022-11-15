@@ -36,7 +36,7 @@ class BlacklistController extends Controller
 
     public function getByType(Request $request): AnonymousResourceCollection
     {
-        $types = explode(',', $request->query('type', ['IP,DOMAIN,EMAIL']));
+        $types = explode(',', $request->input('type', ['IP,DOMAIN,EMAIL']));
         $blacklisted = Blacklist::whereIn('type', $types)->get();
         return BlacklistResource::collection($blacklisted);
     }
@@ -77,5 +77,11 @@ class BlacklistController extends Controller
     {
         $deleted = Blacklist::where('id', $request->input('id'))->delete();
         return $deleted ? $this->success('blacklist.deleted') : $this->error('blacklist.delete_failed');
+    }
+
+    public function toggleActive(Request $request, Blacklist $blacklist): BlacklistResource
+    {
+        $blacklist->update(['active' => !$blacklist->isActive()]);
+        return new BlacklistResource($blacklist);
     }
 }
