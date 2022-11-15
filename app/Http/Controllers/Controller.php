@@ -12,18 +12,43 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function success(string $message): JsonResponse
+    public function success(array|string $success): JsonResponse
     {
-        return $this->respond(['message' => $message]);
+        return $this->respond(is_array($success) ? $success : ['message' => $success]);
     }
 
-    public function error(string $error): JsonResponse
+    public function created(array|string $created): JsonResponse
     {
-        return $this->respond(['error' => $error], 400);
+        return $this->respond(is_array($created) ? $created : ['message' => $created], 201);
     }
 
-    public function respond(array $json, int $statusCode = 200): JsonResponse
+    public function error(array|string $error): JsonResponse
     {
-        return response()->json($json, $statusCode);
+        return $this->respond(is_array($error) ? $error : ['error' => $error], 400);
+    }
+
+    public function unauthorized(): JsonResponse
+    {
+        return $this->respond(['message' => 'Sorry, wrong email address or password. Please try again'], 401);
+    }
+
+    public function permissionDenied(): JsonResponse
+    {
+        return $this->respond(['message' => 'Sorry, you are not allowed to make requested action'], 403);
+    }
+
+    public function notFound(): JsonResponse
+    {
+        return $this->respond(['message' => 'Sorry, the requested resource could not be found'], 404);
+    }
+
+    public function badRequest(): JsonResponse
+    {
+        return $this->respond(['message' => 'Sorry, the server cannot process the request due to an apparent client error'], 400);
+    }
+
+    public function respond(array $array, int $statusCode = 200): JsonResponse
+    {
+        return response()->json($array, $statusCode);
     }
 }
