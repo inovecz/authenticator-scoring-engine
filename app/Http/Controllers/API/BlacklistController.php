@@ -36,7 +36,8 @@ class BlacklistController extends Controller
 
     public function getByType(Request $request): AnonymousResourceCollection
     {
-        $types = explode(',', $request->input('type', ['IP,DOMAIN,EMAIL']));
+        $types = $request->input('type', ['IP,DOMAIN,EMAIL']);
+        $types = is_array($types) ? $types : explode(',', $types);
         $blacklisted = Blacklist::whereIn('type', $types)->get();
         return BlacklistResource::collection($blacklisted);
     }
@@ -66,10 +67,17 @@ class BlacklistController extends Controller
 
     public function updateOrCreate(BlacklistSaveRequest $request): JsonResponse|BlacklistResource
     {
-        if (Blacklist::whereType($request->input('type'))->whereValue($request->input('value'))->exists()) {
-            return $this->error('blacklist.type_value_combination_exists');
+        if ($request->has('id')) {
+            $blacklist = Blacklist::where('id', $request->input('id'))->first();
+            $blacklist->update($request->only('type', 'value', 'reason', 'active'));
+        } else {
+            $type = $request->input('type');
+            $value = json_encode($request->input('value'), JSON_THROW_ON_ERROR);
+            if (Blacklist::where(compact('type', 'value'))->exists()) {
+                return $this->error('blacklist.type_value_combination_exists');
+            }
+            $blacklist = Blacklist::create($request->only('type', 'value', 'reason', 'active'));
         }
-        $blacklist = Blacklist::updateOrCreate($request->all('id'), $request->all('type', 'value', 'reason', 'active'));
         return new BlacklistResource($blacklist);
     }
 

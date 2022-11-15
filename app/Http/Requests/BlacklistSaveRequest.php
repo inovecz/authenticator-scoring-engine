@@ -18,7 +18,7 @@ class BlacklistSaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'sometimes|integer|exists:blacklists,id',
+            'id' => 'sometimes|required|integer|exists:blacklists,id',
             'type' => ['required', new Enum(BlacklistTypeEnum::class)],
             'value' => 'required|string',
             'reason' => 'sometimes|nullable|string',
@@ -31,7 +31,7 @@ class BlacklistSaveRequest extends FormRequest
         return [
             'id' => 'digit',
             'type' => 'escape|trim',
-            'value' => 'escape|trim',
+            'value' => 'escape|trim|cast:array',
             'reason' => 'escape|trim',
             'active' => 'escape|trim|cast:boolean',
         ];
