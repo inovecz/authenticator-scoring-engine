@@ -46,8 +46,7 @@ class BlacklistService
 
     private function checkInBlacklist(string $value, BlacklistTypeEnum $blacklistType): ?int
     {
-        $value = json_encode($value);
-        if ($blacklistType !== BlacklistTypeEnum::IP && $blacklist = Blacklist::whereActive(true)->whereType($blacklistType)->whereValue($value)->first()) {
+        if ($blacklistType !== BlacklistTypeEnum::IP && $blacklist = Blacklist::whereActive(true)->whereType($blacklistType)->whereValue(json_encode($value))->first()) {
             return $blacklist->getId();
         }
 
