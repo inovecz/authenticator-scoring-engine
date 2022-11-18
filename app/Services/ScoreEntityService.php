@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
@@ -31,11 +33,11 @@ class ScoreEntityService extends ScoreService
     {
         $maxGeoDataScore = $this->getMethodMaxScore(__FUNCTION__);
         $columns = ['country_code', 'country', 'city', 'region', 'longitude', 'latitude', 'ip'];
-        $loginData = array_filter($currentLoginData, static fn ($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
+        $loginData = array_filter($currentLoginData, static fn($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
         $mostFrequentDataObject = $this->getMostFrequentData($entity, $columns);
         $loginData['longitude'] = $loginData['longitude'] ? round($loginData['longitude'], 2) : 0.0;
         $loginData['latitude'] = $loginData['latitude'] ? round($loginData['latitude'], 2) : 0.0;
-        return (int) ($maxGeoDataScore / count($columns) * count(array_diff((array)$mostFrequentDataObject, $loginData)));
+        return (int) ($maxGeoDataScore / count($columns) * count(array_diff((array) $mostFrequentDataObject, $loginData)));
     }
 
     /**
@@ -46,11 +48,10 @@ class ScoreEntityService extends ScoreService
     {
         $maxDeviceScore = $this->getMethodMaxScore(__FUNCTION__);
         $columns = ['device', 'os', 'browser'];
-        $loginData = array_filter($currentLoginData, static fn ($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
+        $loginData = array_filter($currentLoginData, static fn($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
         $mostFrequentDataObject = $this->getMostFrequentData($entity, $columns);
-        return (int) ($maxDeviceScore / count($columns) * count(array_diff((array)$mostFrequentDataObject, $loginData)));
+        return (int) ($maxDeviceScore / count($columns) * count(array_diff((array) $mostFrequentDataObject, $loginData)));
     }
-
 
     private function getMostFrequentData(string $entity, array $columns): \stdClass
     {

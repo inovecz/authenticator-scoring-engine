@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
-namespace App\Services;
 
-use Illuminate\Support\Str;
+declare(strict_types=1);
+
+namespace App\Services;
 
 class ScoreService
 {
@@ -10,8 +10,11 @@ class ScoreService
     {
         $reflection = new \ReflectionClass($this);
         $docBlock = $reflection->getMethod($method)->getDocComment();
-        preg_match_all('/@maxMethodScore (?<maxMethodScore>\d+)/m', $docBlock, $matches, PREG_SET_ORDER, 0);
-        return isset($matches[0]['maxMethodScore']) ? (int)$matches[0]['maxMethodScore'] : null;
+        if ($docBlock) {
+            preg_match_all('/@maxMethodScore (?<maxMethodScore>\d+)/m', $docBlock, $matches, PREG_SET_ORDER, 0);
+            return isset($matches[0]['maxMethodScore']) ? (int) $matches[0]['maxMethodScore'] : null;
+        }
+        return null;
     }
 
     public function getMaxScore(): ?int
