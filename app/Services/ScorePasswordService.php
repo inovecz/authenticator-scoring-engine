@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Services;
 
 use Illuminate\Validation\NotPwnedVerifier;
@@ -21,7 +23,7 @@ class ScorePasswordService extends ScoreService
 
         return [
             'leaks' => $leaksScore,
-            'length' =>  $lengthScore,
+            'length' => $lengthScore,
             'complexity' => $complexityScore,
             'score' => $passwordScore,
         ];
@@ -33,6 +35,10 @@ class ScorePasswordService extends ScoreService
      */
     private function scoreLeaks(string $password, int $allowedLeaks = 0): int
     {
+        if (!setting('scoring.password.leaks')) {
+            return 0;
+        }
+
         $maxLeaksScore = $this->getMethodMaxScore(__FUNCTION__);
         return (new NotPwnedVerifier(new \Illuminate\Http\Client\Factory()))->verify([
             'value' => $password,
@@ -46,6 +52,10 @@ class ScorePasswordService extends ScoreService
      */
     private function scoreLength(string $password): int
     {
+        if (!setting('scoring.password.length')) {
+            return 0;
+        }
+
         $maxLengthScore = $this->getMethodMaxScore(__FUNCTION__);
         $length = mb_strlen($password);
         return $length >= $maxLengthScore ? 0 : $maxLengthScore - $length;
@@ -57,8 +67,11 @@ class ScorePasswordService extends ScoreService
      */
     private function scoreComplexity(string $password): int
     {
-        $maxComplexityScore = $this->getMethodMaxScore(__FUNCTION__);
+        if (!setting('scoring.password.complexity')) {
+            return 0;
+        }
 
+        $maxComplexityScore = $this->getMethodMaxScore(__FUNCTION__);
         $tests = [
             'has_numbers' => '/\pN/u',
             'has_letters' => '/\pL/u',

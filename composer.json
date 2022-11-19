@@ -10,6 +10,7 @@
   "require": {
     "php": "^8.0.2",
     "adrianorosa/laravel-geolocation": "^1.1",
+    "anlutro/l4-settings": "^1.2",
     "guzzlehttp/guzzle": "^7.2",
     "jenssegers/agent": "^2.6",
     "laravel/framework": "^9.19",

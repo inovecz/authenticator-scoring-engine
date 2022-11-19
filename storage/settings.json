@@ -1,0 +1,9 @@
+{
+  "scoring": {
+    "password": {
+      "leaks": true,
+      "length": false,
+      "complexity": true
+    }
+  }
+}
