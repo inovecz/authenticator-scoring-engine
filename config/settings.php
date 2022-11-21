@@ -12,7 +12,7 @@ return [
     | Supported: "json", "database"
     |
     */
-    'store' => 'json',
+    'store' => env('SETTINGS_DRIVER', 'json'),
 
     /*
     |--------------------------------------------------------------------------

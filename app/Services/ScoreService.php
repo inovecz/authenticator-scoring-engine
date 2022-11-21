@@ -11,8 +11,18 @@ class ScoreService
         $reflection = new \ReflectionClass($this);
         $docBlock = $reflection->getMethod($method)->getDocComment();
         if ($docBlock) {
-            preg_match_all('/@maxMethodScore (?<maxMethodScore>\d+)/m', $docBlock, $matches, PREG_SET_ORDER, 0);
-            return isset($matches[0]['maxMethodScore']) ? (int) $matches[0]['maxMethodScore'] : null;
+            preg_match_all('/@settings (?<settings>.+)/m', $docBlock, $settings, PREG_SET_ORDER, 0);
+            if (isset($settings[0]['settings'])) {
+                $settings = explode(',', $settings[0]['settings']);
+                foreach ($settings as $setting) {
+                    if (!setting($setting) || setting($setting) === false) {
+                        return 0;
+                    }
+                }
+            }
+
+            preg_match_all('/@maxMethodScore (?<maxMethodScore>\d+)/m', $docBlock, $maxScore, PREG_SET_ORDER, 0);
+            return isset($maxScore[0]['maxMethodScore']) ? (int) $maxScore[0]['maxMethodScore'] : null;
         }
         return null;
     }

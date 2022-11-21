@@ -4,13 +4,25 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\LeakedEmail;
+use App\Models\LeakedPhone;
+use App\Models\DisposableEmail;
 use Illuminate\Support\Facades\DB;
 
 class ScoreEntityService extends ScoreService
 {
-    public function scoreEntity(string $entity, array $currentLoginData): array
+    public function scoreEntity(string $entity, array $currentLoginData, string $email, string $phone = null): array
     {
         $entityScore = 0;
+
+        $leakedEmailScore = $this->scoreLeakedEmail($email);
+        $entityScore += $leakedEmailScore;
+
+        $disposableEmailScore = $this->scoreDisposableEmail($email);
+        $entityScore += $disposableEmailScore;
+
+        $leakedPhoneScore = !$phone ? 0 : $this->scoreLeakedPhone($phone);
+        $entityScore += $leakedPhoneScore;
 
         $geoDataScore = $this->scoreGeoData($entity, $currentLoginData);
         $entityScore += $geoDataScore;
@@ -21,16 +33,26 @@ class ScoreEntityService extends ScoreService
         return [
             'geo' => $geoDataScore,
             'device' => $deviceScore,
+            'leaks' => [
+                'email' => $leakedEmailScore,
+                'phone' => $leakedPhoneScore,
+            ],
+            'disposable_email' => $disposableEmailScore,
             'score' => $entityScore,
         ];
     }
 
     /**
      * @maxMethodScore 20
+     * @settings scoring.entity.geodata
      * @return int scoreGeoData (Same as usual = 0, Totally different = 20)
      */
     private function scoreGeoData(string $entity, array $currentLoginData): int
     {
+        if (!setting('scoring.entity.geodata')) {
+            return 0;
+        }
+
         $maxGeoDataScore = $this->getMethodMaxScore(__FUNCTION__);
         $columns = ['country_code', 'country', 'city', 'region', 'longitude', 'latitude', 'ip'];
         $loginData = array_filter($currentLoginData, static fn($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
@@ -42,10 +64,15 @@ class ScoreEntityService extends ScoreService
 
     /**
      * @maxMethodScore 20
+     * @settings scoring.entity.device
      * @return int scoreDevice (Same as usual = 0, Totally different = 20)
      */
     private function scoreDevice(string $entity, array $currentLoginData): int
     {
+        if (!setting('scoring.entity.device')) {
+            return 0;
+        }
+
         $maxDeviceScore = $this->getMethodMaxScore(__FUNCTION__);
         $columns = ['device', 'os', 'browser'];
         $loginData = array_filter($currentLoginData, static fn($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
@@ -65,5 +92,51 @@ class ScoreEntityService extends ScoreService
                 ->limit(1), $column);
         }
         return $mostFrequentDataObject->distinct()->first();
+    }
+
+    /**
+     * @maxMethodScore 20
+     * @settings scoring.entity.leaks.email
+     * @return int scoreLeakedEmail (Not leaked = 0, Leaked = 20)
+     */
+    private function scoreLeakedEmail(string $email): int
+    {
+        if (!setting('scoring.entity.leaks.email')) {
+            return 0;
+        }
+
+        $maxLeakedEmailScore = $this->getMethodMaxScore(__FUNCTION__);
+        return LeakedEmail::where('email', $email)->exists() ? $maxLeakedEmailScore : 0;
+    }
+
+    /**
+     * @maxMethodScore 20
+     * @settings scoring.entity.leaks.phone
+     * @return int scoreLeakedPhone (Not leaked = 0, Leaked = 20)
+     */
+    private function scoreLeakedPhone(string $phone): int
+    {
+        if (!setting('scoring.entity.leaks.phone')) {
+            return 0;
+        }
+
+        $maxLeakedPhoneScore = $this->getMethodMaxScore(__FUNCTION__);
+        return LeakedPhone::where('phone', $phone)->exists() ? $maxLeakedPhoneScore : 0;
+    }
+
+    /**
+     * @maxMethodScore 20
+     * @settings scoring.entity.disposable_email
+     * @return int scoreDisposableEmail (Not disposable = 0, Disposable = 20)
+     */
+    private function scoreDisposableEmail(string $email): int
+    {
+        if (!setting('scoring.entity.disposable_email')) {
+            return 0;
+        }
+
+        $maxLeakedPhoneScore = $this->getMethodMaxScore(__FUNCTION__);
+        $domain = get_email_domain($email);
+        return DisposableEmail::where('domain', $domain)->exists() ? $maxLeakedPhoneScore : 0;
     }
 }

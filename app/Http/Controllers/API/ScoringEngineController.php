@@ -25,6 +25,7 @@ class ScoringEngineController extends Controller
     {
         $password = $request->input('password');
         $email = $request->input('email');
+        $phone = $request->input('phone');
         $entity = $request->input('hash');
         $userAgent = $request->input('user-agent');
         $clientIp = $request->input('ip');
@@ -53,10 +54,10 @@ class ScoringEngineController extends Controller
             $scorePassword = $this->scorePasswordService->scorePassword($password);
 
             $maxEntityScore = $this->scoreEntityService->getMaxScore();
-            $scoreEntity = $this->scoreEntityService->scoreEntity($entity, $loginData);
+            $scoreEntity = $this->scoreEntityService->scoreEntity($entity, $loginData, $email, $phone);
 
             // Convert real score range to 0 - 100
-            $loginScore = $scorePassword['score'] + $scoreEntity['score'] / ($maxPasswordScore + $maxEntityScore) * 100;
+            $loginScore = ($scorePassword['score'] + $scoreEntity['score']) / ($maxPasswordScore + $maxEntityScore) * 100;
 
             LoginAttemp::create($loginData);
 

@@ -1,13 +1,1 @@
-{
-  "scoring": {
-    "password": {
-      "leaks": true,
-      "length": false,
-      "complexity": true
-    },
-    "entity": {
-      "geodata": true,
-      "device": true
-    }
-  }
-}
+{"scoring":{"password":{"leaks":true,"length":true,"complexity":{"symbols":true,"mixed_case":true,"letters":true,"numbers":true}},"entity":{"device":true,"geodata":true,"disposable_email":true,"leaks":{"phone":true,"email":true}}}}

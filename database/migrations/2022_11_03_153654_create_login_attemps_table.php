@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+declare(strict_types=1);
 
-return new class extends Migration
-{
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('login_attemps', static function (Blueprint $table) {
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->string('city', 128)->nullable();
             $table->float('longitude')->nullable();
             $table->float('latitude')->nullable();
-            $table->string('ip',15)->nullable();
+            $table->string('ip', 15)->nullable();
             $table->string('device')->nullable();
             $table->string('os')->nullable();
             $table->string('browser')->nullable();

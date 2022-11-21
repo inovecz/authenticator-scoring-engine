@@ -11,5 +11,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(BlacklistSeeder::class);
         $this->call(SettingsSeeder::class);
+        $this->call(LeakedEmailSeeder::class);
+        $this->call(LeakedPhoneSeeder::class);
+        $this->call(DisposableEmailSeeder::class);
     }
 }

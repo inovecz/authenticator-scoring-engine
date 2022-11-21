@@ -26,8 +26,7 @@ class BlacklistService
 
     public function isBlacklisted(string $email, string $ip): array
     {
-        $explodedEmail = explode('@', $email);
-        $domain = array_pop($explodedEmail);
+        $domain = get_email_domain($email);
 
         if ($blacklistId = $this->checkInBlacklist($ip, BlacklistTypeEnum::IP)) {
             return [true, BlacklistTypeEnum::IP, $ip, $blacklistId];

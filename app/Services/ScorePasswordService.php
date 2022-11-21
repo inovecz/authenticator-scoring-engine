@@ -18,19 +18,31 @@ class ScorePasswordService extends ScoreService
         $lengthScore = $this->scoreLength($password);
         $passwordScore += $lengthScore;
 
-        $complexityScore = $this->scoreComplexity($password);
-        $passwordScore += $complexityScore;
+        $complexityNumbersScore = $this->scoreComplexityNumbers($password);
+        $passwordScore += $complexityNumbersScore;
+        $complexityLettersScore = $this->scoreComplexityLetters($password);
+        $passwordScore += $complexityLettersScore;
+        $complexityMixedCaseScore = $this->scoreComplexityMixedCase($password);
+        $passwordScore += $complexityMixedCaseScore;
+        $complexitySymbolsScore = $this->scoreComplexitySymbols($password);
+        $passwordScore += $complexitySymbolsScore;
 
         return [
             'leaks' => $leaksScore,
             'length' => $lengthScore,
-            'complexity' => $complexityScore,
+            'complexity' => [
+                'numbers' => $complexityNumbersScore,
+                'letters' => $complexityLettersScore,
+                'mixed_case' => $complexityMixedCaseScore,
+                'symbols' => $complexitySymbolsScore,
+            ],
             'score' => $passwordScore,
         ];
     }
 
     /**
      * @maxMethodScore 20
+     * @settings scoring.password.leaks
      * @return int scoreLeaked (Not leaked = 0, Leaked = 20)
      */
     private function scoreLeaks(string $password, int $allowedLeaks = 0): int
@@ -48,6 +60,7 @@ class ScorePasswordService extends ScoreService
 
     /**
      * @maxMethodScore 20
+     * @settings scoring.password.length
      * @return int scoreLength (Best = 0, Worst = 20)
      */
     private function scoreLength(string $password): int
@@ -63,27 +76,45 @@ class ScorePasswordService extends ScoreService
 
     /**
      * @maxMethodScore 20
-     * @return int scoreComplexity (Best = 0, Worst = 20)
+     * @settings scoring.password.complexity.numbers
+     * @return int scoreComplexityNumbers (Used = 0, Not used = 20)
      */
-    private function scoreComplexity(string $password): int
+    private function scoreComplexityNumbers(string $password): int
     {
-        if (!setting('scoring.password.complexity')) {
-            return 0;
-        }
+        $maxComplexityNumbersScore = $this->getMethodMaxScore(__FUNCTION__);
+        return !preg_match('/\pN/u', $password) ? $maxComplexityNumbersScore : 0;
+    }
 
-        $maxComplexityScore = $this->getMethodMaxScore(__FUNCTION__);
-        $tests = [
-            'has_numbers' => '/\pN/u',
-            'has_letters' => '/\pL/u',
-            'has_mixed_case' => '/(\p{Ll}+.*\p{Lu})|(\p{Lu}+.*\p{Ll})/u',
-            'has_symbols' => '/\p{Z}|\p{S}|\p{P}/u'
-        ];
+    /**
+     * @maxMethodScore 20
+     * @settings scoring.password.complexity.letters
+     * @return int scoreComplexityLetters (Used = 0, Not used = 20)
+     */
+    private function scoreComplexityLetters(string $password): int
+    {
+        $maxComplexityLettersScore = $this->getMethodMaxScore(__FUNCTION__);
+        return !preg_match('/\pL/u', $password) ? $maxComplexityLettersScore : 0;
+    }
 
-        $passed = 0;
-        foreach ($tests as $dummy => $regex) {
-            $passed += preg_match($regex, $password) ? 1 : 0;
-        }
+    /**
+     * @maxMethodScore 20
+     * @settings scoring.password.complexity.mixed_case
+     * @return int scoreComplexityMixedCase (Used = 0, Not used = 20)
+     */
+    private function scoreComplexityMixedCase(string $password): int
+    {
+        $maxComplexityMixedCaseScore = $this->getMethodMaxScore(__FUNCTION__);
+        return !preg_match('/(\p{Ll}+.*\p{Lu})|(\p{Lu}+.*\p{Ll})/u', $password) ? $maxComplexityMixedCaseScore : 0;
+    }
 
-        return (int) $maxComplexityScore - ($passed) * ($maxComplexityScore / count($tests));
+    /**
+     * @maxMethodScore 20
+     * @settings scoring.password.complexity.symbols
+     * @return int scoreComplexitySymbols (Used = 0, Not used = 20)
+     */
+    private function scoreComplexitySymbols(string $password): int
+    {
+        $maxComplexitySymbolsScore = $this->getMethodMaxScore(__FUNCTION__);
+        return !preg_match('/\p{Z}|\p{S}|\p{P}/u', $password) ? $maxComplexitySymbolsScore : 0;
     }
 }
