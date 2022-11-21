@@ -19,8 +19,8 @@ Route::prefix('blacklists')->group(function () {
 
 Route::prefix('settings')->group(function () {
     Route::get('/', [SettingController::class, 'getAll']);
+    Route::post('/', [SettingController::class, 'storeSetting']);
     Route::get('/{key}', [SettingController::class, 'getByKey'])->where('key', '[0-9a-zA-Z\.\-\_]+');
-    Route::post('/save', [SettingController::class, 'storeSetting']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

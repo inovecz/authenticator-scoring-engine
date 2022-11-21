@@ -17,7 +17,7 @@ class SettingSaveRequest extends FormRequest
     {
         return [
             'key' => 'required|string',
-            'value' => 'required|string',
+            'value' => 'required',
         ];
     }
 

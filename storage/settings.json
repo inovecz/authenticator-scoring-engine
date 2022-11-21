@@ -4,6 +4,10 @@
       "leaks": true,
       "length": false,
       "complexity": true
+    },
+    "entity": {
+      "geodata": true,
+      "device": true
     }
   }
 }
