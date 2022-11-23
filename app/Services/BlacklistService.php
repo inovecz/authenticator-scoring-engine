@@ -28,15 +28,18 @@ class BlacklistService
     {
         $domain = get_email_domain($email);
 
-        if ($blacklistId = $this->checkInBlacklist($ip, BlacklistTypeEnum::IP)) {
+        $blacklistId = $this->checkInBlacklist($ip, BlacklistTypeEnum::IP);
+        if ($blacklistId && setting('deny_login.blacklist.ip') === true) {
             return [true, BlacklistTypeEnum::IP, $ip, $blacklistId];
         }
 
-        if ($blacklistId = $this->checkInBlacklist($domain, BlacklistTypeEnum::DOMAIN)) {
+        $blacklistId = $this->checkInBlacklist($domain, BlacklistTypeEnum::DOMAIN);
+        if ($blacklistId && setting('deny_login.blacklist.domain') === true) {
             return [true, BlacklistTypeEnum::DOMAIN, $domain, $blacklistId];
         }
 
-        if ($blacklistId = $this->checkInBlacklist($email, BlacklistTypeEnum::EMAIL)) {
+        $blacklistId = $this->checkInBlacklist($email, BlacklistTypeEnum::EMAIL);
+        if ($blacklistId && setting('deny_login.blacklist.email') === true) {
             return [true, BlacklistTypeEnum::EMAIL, $email, $blacklistId];
         }
 

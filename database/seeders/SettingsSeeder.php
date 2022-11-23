@@ -27,6 +27,12 @@ class SettingsSeeder extends Seeder
             'scoring.entity.disposable_email' => true,
             'scoring.entity.geodata' => true,
             'scoring.entity.device' => true,
+            'scoring.entity.blacklist' => true,
+            'deny_login.blacklist.ip' => true,
+            'deny_login.blacklist.domain' => true,
+            'deny_login.blacklist.email' => true,
+            'scoring.twofactor_when_score_gte' => 50,
+            'scoring.disallow_when_score_gte' => 75,
         ])->save();
     }
 }

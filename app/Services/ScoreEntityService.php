@@ -30,6 +30,9 @@ class ScoreEntityService extends ScoreService
         $deviceScore = $this->scoreDevice($entity, $currentLoginData);
         $entityScore += $deviceScore;
 
+        $blacklistScore = $this->scoreBlacklist($email, $currentLoginData['ip']);
+        $entityScore += $blacklistScore;
+
         return [
             'geo' => $geoDataScore,
             'device' => $deviceScore,
@@ -138,5 +141,21 @@ class ScoreEntityService extends ScoreService
         $maxLeakedPhoneScore = $this->getMethodMaxScore(__FUNCTION__);
         $domain = get_email_domain($email);
         return DisposableEmail::where('domain', $domain)->exists() ? $maxLeakedPhoneScore : 0;
+    }
+
+    /**
+     * @maxMethodScore 20
+     * @settings scoring.entity.blacklist
+     * @return int scoreBlacklist (Not blacklisted = 0, Blacklisted = 20)
+     */
+    private function scoreBlacklist(string $email, string $ip): int
+    {
+        if (!setting('scoring.entity.blacklist')) {
+            return 0;
+        }
+
+        $maxBlacklistScore = $this->getMethodMaxScore(__FUNCTION__);
+        $blacklistService = new BlacklistService();
+        return $blacklistService->isBlacklisted($email, $ip) ? $maxBlacklistScore : 0;
     }
 }
