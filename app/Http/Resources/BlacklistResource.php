@@ -17,7 +17,7 @@ class BlacklistResource extends JsonResource
             'value' => $this->getValue(),
             'reason' => $this->getReason(),
             'active' => $this->isActive(),
-            'created_at' => $this->getCreatedAt(),
+            'created_at' => $this->getCreatedAt()->toDatetimeLocalString(),
         ];
     }
 }

@@ -25,7 +25,11 @@ class SettingController extends Controller
 
     public function storeSetting(SettingSaveRequest $request): JsonResponse
     {
-        setting([$request->input('key') => $request->input('value')])->save();
-        return $this->success([$request->input('key') => setting($request->input('key'))]);
+        $key = $request->input('key');
+        if (setting($key)) {
+            setting([$key => $request->input('value')])->save();
+            return $this->success([$key => setting($key)]);
+        }
+        return $this->notFound();
     }
 }

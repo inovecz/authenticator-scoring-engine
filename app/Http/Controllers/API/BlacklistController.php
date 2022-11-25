@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Services\BlacklistService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DatatableRequest;
 use App\Http\Resources\BlacklistResource;
 use App\Repositories\BlacklistRepository;
 use App\Http\Requests\BlacklistSaveRequest;
@@ -42,14 +43,14 @@ class BlacklistController extends Controller
         return BlacklistResource::collection($blacklisted);
     }
 
-    public function getDatatable(Request $request, BlacklistTypeEnum $type): JsonResponse
+    public function getDatatable(DatatableRequest $request, BlacklistTypeEnum $type): JsonResponse
     {
-        $pageLength = (int) $request->input('pageLength', 10);
+        $pageLength = (int) $request->input('page_length', 10);
         $page = (int) $request->input('page', 1);
         $search = $request->input('search', '');
         $filter = $request->input('filter', 'all');
-        $orderBy = $request->input('orderBy', 'id');
-        $sortAsc = (bool) $request->input('sortAsc', false);
+        $orderBy = $request->input('order_by', 'id');
+        $sortAsc = (bool) $request->input('sort_asc', false);
 
         $items = $this->blacklistRepository
             ->searchByType($type, $filter, $search)
@@ -61,7 +62,15 @@ class BlacklistController extends Controller
             ->count();
 
         $blacklistService = new BlacklistService();
-        $datatable = $blacklistService->formatDatatable($items, compact('pageLength', 'page', 'total', 'search', 'filter', 'orderBy', 'sortAsc'));
+        $datatable = $blacklistService->formatDatatable($items, [
+            'page_length' => $pageLength,
+            'page' => $page,
+            'total' => $total,
+            'search' => $search,
+            'filter' => $filter,
+            'order_by' => $orderBy,
+            'sort_asc' => $sortAsc,
+        ]);
         return $this->success($datatable);
     }
 

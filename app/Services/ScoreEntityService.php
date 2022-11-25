@@ -41,6 +41,7 @@ class ScoreEntityService extends ScoreService
                 'phone' => $leakedPhoneScore,
             ],
             'disposable_email' => $disposableEmailScore,
+            'blacklist' => $blacklistScore,
             'score' => $entityScore,
         ];
     }

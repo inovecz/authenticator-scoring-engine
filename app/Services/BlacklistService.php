@@ -13,7 +13,7 @@ class BlacklistService
 {
     public function formatDatatable(Collection $items, array $datatableOptions): array
     {
-        $pageLength = $datatableOptions['pageLength'] ?? 10;
+        $pageLength = $datatableOptions['page_length'] ?? 10;
         $page = $datatableOptions['page'] ?? 0;
         $total = $datatableOptions['total'];
 

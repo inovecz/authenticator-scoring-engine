@@ -27,7 +27,7 @@ class ScoringEngineController extends Controller
         $email = $request->input('email');
         $phone = $request->input('phone');
         $entity = $request->input('hash');
-        $userAgent = $request->input('user-agent');
+        $userAgent = $request->input('user_agent');
         $clientIp = $request->input('ip');
         $clientIp = $clientIp === '127.0.0.1' ? '46.135.97.82' : $clientIp;
 
