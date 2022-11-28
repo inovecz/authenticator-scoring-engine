@@ -86,11 +86,12 @@ class ScoreEntityService extends ScoreService
 
     private function getMostFrequentData(string $entity, array $columns): \stdClass
     {
-        $mostFrequentDataObject = DB::table('login_attemps');
+        $mostFrequentDataObject = DB::table('login_attempts');
         foreach ($columns as $column) {
-            $mostFrequentDataObject = $mostFrequentDataObject->selectSub(DB::table('login_attemps')
+            $mostFrequentDataObject = $mostFrequentDataObject->selectSub(DB::table('login_attempts')
                 ->select($column)
                 ->where('entity', $entity)
+                ->where('successful', true)
                 ->groupBy($column)
                 ->orderByRaw('COUNT(*) DESC')
                 ->limit(1), $column);

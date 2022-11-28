@@ -1,15 +1,21 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class LoginAttemp extends Model
+class LoginAttempt extends Model
 {
     use ModelTrait;
+
     // <editor-fold desc="Region: STATE DEFINITION">
     protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $casts = [
+        'successful' => 'boolean',
+    ];
     // </editor-fold desc="Region: STATE DEFINITION">
 
     // <editor-fold desc="Region: GETTERS">
@@ -67,6 +73,11 @@ class LoginAttemp extends Model
     {
         return $this->browser;
     }
+
+    public function isSuccessful(): bool
+    {
+        return $this->successful;
+    }
     // </editor-fold desc="Region: GETTERS">
 
     // <editor-fold desc="Region: ARRAY GETTERS">
@@ -84,6 +95,7 @@ class LoginAttemp extends Model
             'device' => $this->getDevice(),
             'os' => $this->getOS(),
             'browser' => $this->getBrowser(),
+            'successful' => $this->isSuccessful(),
         ];
     }
     // </editor-fold desc="Region: ARRAY GETTERS">

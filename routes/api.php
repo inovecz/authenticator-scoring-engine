@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BlacklistController;
 use App\Http\Controllers\API\ScoringEngineController;
 
 Route::post('score-login', [ScoringEngineController::class, 'scoreLogin']);
+Route::post('confirm-login-attempt', [ScoringEngineController::class, 'confirmLoginAttempt']);
 
 Route::prefix('blacklists')->group(function () {
     Route::get('/', [BlacklistController::class, 'getByType']);

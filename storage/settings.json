@@ -1,1 +1,33 @@
-{"scoring":{"password":{"leaks":true,"length":true,"complexity":{"symbols":true,"mixed_case":true,"letters":true,"numbers":true}},"entity":{"device":true,"geodata":true,"disposable_email":true,"leaks":{"phone":true,"email":true},"blacklist":true},"twofactor_when_score_gte":50,"disallow_when_score_gte":75},"deny_login":{"blacklist":{"email":true,"domain":true,"ip":true}}}
+{
+  "scoring": {
+    "password": {
+      "leaks": true,
+      "length": true,
+      "complexity": {
+        "symbols": true,
+        "mixed_case": true,
+        "letters": true,
+        "numbers": true
+      }
+    },
+    "entity": {
+      "device": true,
+      "geodata": true,
+      "disposable_email": true,
+      "leaks": {
+        "phone": true,
+        "email": true
+      },
+      "blacklist": true
+    },
+    "twofactor_when_score_gte": 50,
+    "disallow_when_score_gte": 75
+  },
+  "deny_login": {
+    "blacklist": {
+      "email": true,
+      "domain": true,
+      "ip": true
+    }
+  }
+}

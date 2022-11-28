@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
-use App\Models\LoginAttemp;
+use App\Models\LoginAttempt;
 use Illuminate\Http\Request;
 use App\Services\LoginService;
 use Illuminate\Http\JsonResponse;
@@ -12,6 +12,7 @@ use App\Services\BlacklistService;
 use App\Services\ScoreEntityService;
 use App\Http\Controllers\Controller;
 use App\Services\ScorePasswordService;
+use App\Http\Requests\ConfirmLoginAttemptRequest;
 
 class ScoringEngineController extends Controller
 {
@@ -48,7 +49,7 @@ class ScoringEngineController extends Controller
 
         try {
             $loginService = new LoginService();
-            $loginData = $loginService->getLoginAttempData($entity, $clientIp, $userAgent);
+            $loginData = $loginService->getLoginAttemptData($entity, $clientIp, $userAgent);
 
             $maxPasswordScore = $this->scorePasswordService->getMaxScore();
             $scorePassword = $this->scorePasswordService->scorePassword($password);
@@ -59,11 +60,17 @@ class ScoringEngineController extends Controller
             // Convert real score range to 0 - 100
             $loginScore = ($scorePassword['score'] + $scoreEntity['score']) / ($maxPasswordScore + $maxEntityScore) * 100;
 
-            LoginAttemp::create($loginData);
+            $loginAttempt = LoginAttempt::create($loginData);
 
-            return response()->json(['score' => $loginScore, 'password' => $scorePassword, 'entity' => $scoreEntity]);
+            return response()->json(['score' => $loginScore, 'password' => $scorePassword, 'entity' => $scoreEntity, 'login_attempt_id' => $loginAttempt->getId()]);
         } catch (\Throwable $throwable) {
             return response()->json(['error' => $throwable->getMessage(), 'code' => $throwable->getCode(), 'file' => $throwable->getFile(), 'line' => $throwable->getLine()], 400);
         }
+    }
+
+    public function confirmLoginAttempt(ConfirmLoginAttemptRequest $request): JsonResponse
+    {
+        $confirmed = LoginAttempt::where('id', $request->input('id'))->update(['successful' => true]);
+        return $confirmed ? $this->success('Loggin attempt confirmed as successful') : $this->error('Login attempt not confirmed');
     }
 }

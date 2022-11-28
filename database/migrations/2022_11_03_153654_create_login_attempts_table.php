@@ -9,7 +9,7 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('login_attemps', static function (Blueprint $table) {
+        Schema::create('login_attempts', static function (Blueprint $table) {
             $table->id();
             $table->string('entity', 32)->index();
             $table->string('country_code', 4)->nullable();
@@ -22,12 +22,13 @@ return new class extends Migration {
             $table->string('device')->nullable();
             $table->string('os')->nullable();
             $table->string('browser')->nullable();
+            $table->boolean('successful')->default(false);
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('login_attemps');
+        Schema::dropIfExists('login_attempts');
     }
 };
