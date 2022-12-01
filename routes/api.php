@@ -12,7 +12,7 @@ Route::post('confirm-login-attempt', [ScoringEngineController::class, 'confirmLo
 Route::prefix('blacklists')->group(function () {
     Route::get('/', [BlacklistController::class, 'getByType']);
     Route::post('/', [BlacklistController::class, 'updateOrCreate']);
-    Route::delete('/', [BlacklistController::class, 'destroy']);
+    Route::delete('/{blacklist}', [BlacklistController::class, 'destroy']);
     Route::get('/count', [BlacklistController::class, 'getCount']);
     Route::post('/{type}/datatable', [BlacklistController::class, 'getDatatable'])->whereIn('type', \App\Enums\BlacklistTypeEnum::values());
     Route::get('/{blacklist}/toggle-active', [BlacklistController::class, 'toggleActive'])->where('blacklist', '[0-9]+');

@@ -15,7 +15,6 @@ use App\Http\Requests\DatatableRequest;
 use App\Http\Resources\BlacklistResource;
 use App\Repositories\BlacklistRepository;
 use App\Http\Requests\BlacklistSaveRequest;
-use App\Http\Requests\BlacklistDeleteRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BlacklistController extends Controller
@@ -90,10 +89,10 @@ class BlacklistController extends Controller
         return new BlacklistResource($blacklist);
     }
 
-    public function destroy(BlacklistDeleteRequest $request): JsonResponse
+    public function destroy(Request $request, Blacklist $blacklist): JsonResponse
     {
-        $deleted = Blacklist::where('id', $request->input('id'))->delete();
-        return $deleted ? $this->success('blacklist.deleted') : $this->error('blacklist.delete_failed');
+        $deleted = $blacklist->delete();
+        return $deleted ? $this->success('Blacklist has been successfuly deleted') : $this->error('Unable to delete blacklist');
     }
 
     public function toggleActive(Request $request, Blacklist $blacklist): BlacklistResource
