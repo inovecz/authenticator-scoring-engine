@@ -38,19 +38,22 @@ class ScoringEngineController extends Controller
 
         $blacklistService = new BlacklistService();
         [$blacklisted, $blacklistType, $value, $blaclistId] = $blacklistService->isBlacklisted($email, $clientIp);
+
+        $loginService = new LoginService();
+        $loginData = $loginService->getLoginAttemptData($entity, $clientIp, $userAgent);
+
         if ($blacklisted) {
+            $loginAttempt = LoginAttempt::create($loginData);
             return $this->error([
                 'error' => 'Entity is blacklisted',
                 'value' => $value,
                 'blacklist_type' => $blacklistType,
                 'blacklist_id' => $blaclistId,
+                'login_attempt_id' => $loginAttempt->getId(),
             ]);
         }
 
         try {
-            $loginService = new LoginService();
-            $loginData = $loginService->getLoginAttemptData($entity, $clientIp, $userAgent);
-
             $maxPasswordScore = $this->scorePasswordService->getMaxScore();
             $scorePassword = $this->scorePasswordService->scorePassword($password);
 
