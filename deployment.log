@@ -1,0 +1,762 @@
+Started at [2023/08/03 16:07]
+Config file is /Users/petrkaterinak/DevOps/Inove/Authenticator/authenticator-scoring-engine/deployment.ini
+
+Deploying my site
+Live mode
+Connecting to server
+
+Local-jobs:
+local: vite build
+-> vite v3.2.2 building for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+public/build/manifest.json             0.25 KiB
+public/build/assets/app.878ef8be.css   7.34 KiB / gzip: 2.22 KiB
+public/build/assets/app.500c17f3.js    135.11 KiB / gzip: 49.03 KiB
+
+Remote .deployment file not found
+Scanning files in /Users/petrkaterinak/DevOps/Inove/Authenticator/authenticator-scoring-engine
+Ignoring ./deployment.ini               
+Ignoring ./database/.gitignore          
+Ignoring ./.DS_Store                    
+Ignoring ./bootstrap/cache/.gitignore   
+Ignoring ./deployment.log               
+Ignoring ./node_modules                 
+Ignoring ./storage/debugbar/X52b3d4025b2563693af33ef3e880df0b.json
+Ignoring ./storage/debugbar/Xf671adc49dc1498c1aa68a259cf57316.json
+Ignoring ./storage/debugbar/Xad15260c45cc89bcd41942c8a9330d0a.json
+Ignoring ./storage/debugbar/X8b81c6b52e331c3cd1fd31506386b9da.json
+Ignoring ./storage/debugbar/X88101cef02948588cf604b5b98bac159.json
+Ignoring ./storage/debugbar/X26647b5b86f860a70da7991d5fadfc1b.json
+Ignoring ./storage/debugbar/X41fd45d6c233983748fc4de065e227b5.json
+Ignoring ./storage/debugbar/X6d5b1f6db623cc58581305eb73efda22.json
+Ignoring ./storage/debugbar/X18f473f6dc422fab4fd77c3b282c96c4.json
+Ignoring ./storage/debugbar/X2575c6c5a36dea0c75915b23c9f6cd1d.json
+Ignoring ./storage/debugbar/.gitignore  
+Ignoring ./storage/debugbar/X1f06f3284835b232a54889c639996820.json
+Ignoring ./storage/debugbar/X0389ff4d1469aa428dc1b10f8424484e.json
+Ignoring ./storage/debugbar/Xe7025ccf6c782dc5de2206ca2e1e5c45.json
+Ignoring ./storage/debugbar/X8195b048e2ac18088957c3d81300c572.json
+Ignoring ./storage/debugbar/X9a42ca72205a957db3629dc6a63ca857.json
+Ignoring ./storage/debugbar/Xc1169f521f1998ae270f3434161122c8.json
+Ignoring ./storage/debugbar/X5af5f90e3aa5c3b0c29c0c44fbbdbba2.json
+Ignoring ./storage/debugbar/Xdc264786884a86957f95d977119e38df.json
+Ignoring ./storage/debugbar/Xc6a0bf6f8c97778037dde20d8c2349d9.json
+Ignoring ./storage/app/public/.gitignore
+Ignoring ./storage/app/.gitignore       
+Ignoring ./storage/framework/cache/.gitignore
+Ignoring ./storage/framework/cache/data/c0
+Ignoring ./storage/framework/cache/data/ec
+Ignoring ./storage/framework/cache/data/.gitignore
+Ignoring ./storage/framework/cache/data/b1
+Ignoring ./storage/framework/testing/.gitignore
+Ignoring ./storage/framework/sessions/.gitignore
+Ignoring ./storage/framework/.gitignore 
+Ignoring ./storage/framework/views/3ed0c5d99ab63ca4722fe271b75bea9e469d10aa.php
+Ignoring ./storage/framework/views/.gitignore
+Ignoring ./storage/framework/views/909b81e9f69ff75cd95215c5e25c5414350b9118.php
+Ignoring ./storage/logs/laravel.log     
+Ignoring ./storage/logs/.gitignore      
+Ignoring ./.gitignore                   
+Ignoring ./.gitattributes               
+Ignoring ./.git                         
+Ignoring ./vendor/myclabs               
+Ignoring ./vendor/phpoption             
+Ignoring ./vendor/autoload.php          
+Ignoring ./vendor/hamcrest              
+Ignoring ./vendor/ralouphie             
+Ignoring ./vendor/barryvdh              
+Ignoring ./vendor/egulias               
+Ignoring ./vendor/.DS_Store             
+Ignoring ./vendor/nikic                 
+Ignoring ./vendor/jaybizzle             
+Ignoring ./vendor/guzzlehttp            
+Ignoring ./vendor/nunomaduro            
+Ignoring ./vendor/filp                  
+Ignoring ./vendor/bin                   
+Ignoring ./vendor/theseer               
+Ignoring ./vendor/mockery               
+Ignoring ./vendor/anlutro               
+Ignoring ./vendor/composer              
+Ignoring ./vendor/psy                   
+Ignoring ./vendor/fruitcake             
+Ignoring ./vendor/jenssegers            
+Ignoring ./vendor/league                
+Ignoring ./vendor/nette                 
+Ignoring ./vendor/adrianorosa           
+Ignoring ./vendor/nesbot                
+Ignoring ./vendor/spatie                
+Ignoring ./vendor/livewire              
+Ignoring ./vendor/doctrine              
+Ignoring ./vendor/phpunit               
+Ignoring ./vendor/phar-io               
+Ignoring ./vendor/fakerphp              
+Ignoring ./vendor/brick                 
+Ignoring ./vendor/dflydev               
+Ignoring ./vendor/psr                   
+Ignoring ./vendor/monolog               
+Ignoring ./vendor/voku                  
+Ignoring ./vendor/symfony               
+Ignoring ./vendor/dragonmantank         
+Ignoring ./vendor/ramsey                
+Ignoring ./vendor/mobiledetect          
+Ignoring ./vendor/webmozart             
+Ignoring ./vendor/vlucas                
+Ignoring ./vendor/graham-campbell       
+Ignoring ./vendor/tijsverkoyen          
+Ignoring ./vendor/sebastian             
+Ignoring ./vendor/laravel               
+Ignoring ./vendor/Expectation.php       
+Ignoring ./vendor/maximebf              
+Ignoring ./deployment.phar              
+Ignoring ./.idea                        
+
+Uploading:
+(  1 of 220) /stubs/
+(  2 of 220) /stubs/seeder.stub
+(  3 of 220) /stubs/request.stub
+(  4 of 220) /stubs/view-component.stub
+(  5 of 220) /stubs/policy.stub
+(  6 of 220) /stubs/model.stub
+(  7 of 220) /stubs/rule.stub
+(  8 of 220) /stubs/observer.stub
+(  9 of 220) /stubs/controller.invokable.stub
+( 10 of 220) /stubs/markdown-mail.stub
+( 11 of 220) /stubs/cast.stub
+( 12 of 220) /stubs/policy.plain.stub
+( 13 of 220) /stubs/test.stub
+( 14 of 220) /stubs/controller.stub
+( 15 of 220) /stubs/markdown-notification.stub
+( 16 of 220) /stubs/event.stub
+( 17 of 220) /stubs/controller.model.api.stub
+( 18 of 220) /stubs/scope.stub
+( 19 of 220) /stubs/console.stub
+( 20 of 220) /stubs/migration.stub
+( 21 of 220) /stubs/controller.nested.api.stub
+( 22 of 220) /stubs/resource.stub
+( 23 of 220) /stubs/middleware.stub
+( 24 of 220) /stubs/job.stub
+( 25 of 220) /stubs/migration.update.stub
+( 26 of 220) /stubs/controller.nested.stub
+( 27 of 220) /stubs/notification.stub
+( 28 of 220) /stubs/controller.api.stub
+( 29 of 220) /stubs/cast.inbound.stub
+( 30 of 220) /stubs/resource-collection.stub
+( 31 of 220) /stubs/observer.plain.stub
+( 32 of 220) /stubs/mail.stub
+( 33 of 220) /stubs/factory.stub
+( 34 of 220) /stubs/controller.model.stub
+( 35 of 220) /stubs/migration.create.stub
+( 36 of 220) /stubs/controller.plain.stub
+( 37 of 220) /stubs/provider.stub
+( 38 of 220) /stubs/job.queued.stub
+( 39 of 220) /stubs/model.pivot.stub
+( 40 of 220) /stubs/test.unit.stub
+( 41 of 220) /database/
+( 42 of 220) /database/migrations/
+( 43 of 220) /database/migrations/2022_11_21_091825_create_disposable_emails_table.php
+( 44 of 220) /database/migrations/2022_11_03_153654_create_login_attempts_table.php
+( 45 of 220) /database/migrations/2022_11_21_092011_create_leaked_phones_table.php
+( 46 of 220) /database/migrations/2022_11_21_091811_create_leaked_emails_table.php
+( 47 of 220) /database/migrations/2022_11_09_090648_create_blacklists_table.php
+( 48 of 220) /database/migrations/2014_10_12_000000_create_users_table.php
+( 49 of 220) /database/migrations/2019_08_19_000000_create_failed_jobs_table.php
+( 50 of 220) /database/seeders/
+( 51 of 220) /database/seeders/SettingsSeeder.php
+( 52 of 220) /database/seeders/LeakedPhoneSeeder.php
+( 53 of 220) /database/seeders/BlacklistTestSeeder.php
+( 54 of 220) /database/seeders/BlacklistSeeder.php
+( 55 of 220) /database/seeders/DisposableEmailSeeder.php
+( 56 of 220) /database/seeders/LeakedEmailSeeder.php
+( 57 of 220) /database/seeders/DatabaseSeeder.php
+( 58 of 220) /database/factories/
+( 59 of 220) /database/factories/BlacklistFactory.php
+( 60 of 220) /database/factories/DisposableEmailFactory.php
+( 61 of 220) /database/factories/LeakedPhoneFactory.php
+( 62 of 220) /database/factories/LeakedEmailFactory.php
+( 63 of 220) /database/factories/UserFactory.php
+( 64 of 220) /.env.testing
+( 65 of 220) /composer.lock
+( 66 of 220) /composer.phar
+( 67 of 220) /tailwind.config.js
+( 68 of 220) /phpunit.xml
+( 69 of 220) /bootstrap/
+( 70 of 220) /bootstrap/app.php
+( 71 of 220) /bootstrap/cache/
+( 72 of 220) /bootstrap/cache/services.php
+( 73 of 220) /bootstrap/cache/packages.php
+( 74 of 220) /app/
+( 75 of 220) /app/Providers/
+( 76 of 220) /app/Providers/AppServiceProvider.php
+( 77 of 220) /app/Providers/AuthServiceProvider.php
+( 78 of 220) /app/Providers/RouteServiceProvider.php
+( 79 of 220) /app/Providers/HelperServiceProvider.php
+( 80 of 220) /app/Providers/BroadcastServiceProvider.php
+( 81 of 220) /app/Providers/EventServiceProvider.php
+( 82 of 220) /app/Enums/
+( 83 of 220) /app/Enums/Traits/
+( 84 of 220) /app/Enums/Traits/EnumTrait.php
+( 85 of 220) /app/Enums/BlacklistTypeEnum.php
+( 86 of 220) /app/Repositories/
+( 87 of 220) /app/Repositories/BlacklistRepository.php
+( 88 of 220) /app/Models/
+( 89 of 220) /app/Models/Traits/
+( 90 of 220) /app/Models/Traits/ModelTrait.php
+( 91 of 220) /app/Models/LeakedEmail.php
+( 92 of 220) /app/Models/Blacklist.php
+( 93 of 220) /app/Models/User.php
+( 94 of 220) /app/Models/DisposableEmail.php
+( 95 of 220) /app/Models/LoginAttempt.php
+( 96 of 220) /app/Models/LeakedPhone.php
+( 97 of 220) /app/Exceptions/
+( 98 of 220) /app/Exceptions/Handler.php
+( 99 of 220) /app/Http/
+(100 of 220) /app/Http/Middleware/
+(101 of 220) /app/Http/Middleware/VerifyCsrfToken.php
+(102 of 220) /app/Http/Middleware/RedirectIfAuthenticated.php
+(103 of 220) /app/Http/Middleware/TrimStrings.php
+(104 of 220) /app/Http/Middleware/Authenticate.php
+(105 of 220) /app/Http/Middleware/TrustProxies.php
+(106 of 220) /app/Http/Middleware/ValidateSignature.php
+(107 of 220) /app/Http/Middleware/PreventRequestsDuringMaintenance.php
+(108 of 220) /app/Http/Middleware/EncryptCookies.php
+(109 of 220) /app/Http/Middleware/TrustHosts.php
+(110 of 220) /app/Http/Resources/
+(111 of 220) /app/Http/Resources/BlacklistResource.php
+(112 of 220) /app/Http/Requests/
+(113 of 220) /app/Http/Requests/BlacklistSaveRequest.php
+(114 of 220) /app/Http/Requests/ConfirmLoginAttemptRequest.php
+(115 of 220) /app/Http/Requests/BlacklistDeleteRequest.php
+(116 of 220) /app/Http/Requests/DatatableRequest.php
+(117 of 220) /app/Http/Requests/SettingSaveRequest.php
+(118 of 220) /app/Http/Controllers/
+(119 of 220) /app/Http/Controllers/Controller.php
+(120 of 220) /app/Http/Controllers/API/
+(121 of 220) /app/Http/Controllers/API/BlacklistController.php
+(122 of 220) /app/Http/Controllers/API/SettingController.php
+(123 of 220) /app/Http/Controllers/API/ScoringEngineController.php
+(124 of 220) /app/Http/Kernel.php
+(125 of 220) /app/Helpers/
+(126 of 220) /app/Helpers/StringFunctions.php
+(127 of 220) /app/Services/
+(128 of 220) /app/Services/LoginService.php
+(129 of 220) /app/Services/BlacklistService.php
+(130 of 220) /app/Services/ScoreService.php
+(131 of 220) /app/Services/ScorePasswordService.php
+(132 of 220) /app/Services/ScoreEntityService.php
+(133 of 220) /app/Interfaces/
+(134 of 220) /app/Interfaces/BlacklistInterface.php
+(135 of 220) /app/Console/
+(136 of 220) /app/Console/Kernel.php
+(137 of 220) /config/
+(138 of 220) /config/sanctum.php
+(139 of 220) /config/hashing.php
+(140 of 220) /config/auth.php
+(141 of 220) /config/app.php
+(142 of 220) /config/settings.php
+(143 of 220) /config/mail.php
+(144 of 220) /config/services.php
+(145 of 220) /config/database.php
+(146 of 220) /config/cache.php
+(147 of 220) /config/session.php
+(148 of 220) /config/queue.php
+(149 of 220) /config/broadcasting.php
+(150 of 220) /config/view.php
+(151 of 220) /config/cors.php
+(152 of 220) /config/logging.php
+(153 of 220) /config/filesystems.php
+(154 of 220) /resources/
+(155 of 220) /resources/js/
+(156 of 220) /resources/js/bootstrap.js
+(157 of 220) /resources/js/app.js
+(158 of 220) /resources/sass/
+(159 of 220) /resources/sass/app.scss
+(160 of 220) /resources/views/
+(161 of 220) /resources/views/welcome.blade.php
+(162 of 220) /resources/views/layouts/
+(163 of 220) /resources/views/layouts/app.blade.php
+(164 of 220) /tests/
+(165 of 220) /tests/CreatesApplication.php
+(166 of 220) /tests/Feature/
+(167 of 220) /tests/Feature/BlacklistCheckTest.php
+(168 of 220) /tests/Feature/EntityScoringTest.php
+(169 of 220) /tests/Feature/PasswordScoringTest.php
+(170 of 220) /tests/TestCase.php
+(171 of 220) /vite.config.js
+(172 of 220) /.editorconfig
+(173 of 220) /storage/
+(174 of 220) /storage/debugbar/
+(175 of 220) /storage/app/
+(176 of 220) /storage/app/public/
+(177 of 220) /storage/settings.json
+(178 of 220) /storage/framework/
+(179 of 220) /storage/framework/cache/
+(180 of 220) /storage/framework/cache/data/
+(181 of 220) /storage/framework/testing/
+(182 of 220) /storage/framework/sessions/
+(183 of 220) /storage/framework/sessions/UE9CL3KblEVn1Vdsn5mHyAjyJSJN3p6MaSNNjBW8
+(184 of 220) /storage/framework/sessions/WtGuUl2Wm85E8WdYRhM7qCgETiOVV6E8ndbOGoGt
+(185 of 220) /storage/framework/views/
+(186 of 220) /storage/logs/
+(187 of 220) /README.md
+(188 of 220) /artisan
+(189 of 220) /lang/
+(190 of 220) /lang/en/
+(191 of 220) /lang/en/passwords.php
+(192 of 220) /lang/en/auth.php
+(193 of 220) /lang/en/pagination.php
+(194 of 220) /lang/en/validation.php
+(195 of 220) /public/
+(196 of 220) /public/favicon.ico
+(197 of 220) /public/index.php
+(198 of 220) /public/build/
+(199 of 220) /public/build/manifest.json
+(200 of 220) /public/build/assets/
+(201 of 220) /public/build/assets/app.500c17f3.js
+(202 of 220) /public/build/assets/app.878ef8be.css
+(203 of 220) /public/robots.txt
+(204 of 220) /public/.htaccess
+(205 of 220) /package-lock.json
+(206 of 220) /package.json
+(207 of 220) /style.editorconfig
+(208 of 220) /.env
+(209 of 220) /live/
+(210 of 220) /live/.env
+(211 of 220) /.env.example
+(212 of 220) /postcss.config.js
+(213 of 220) /routes/
+(214 of 220) /routes/channels.php
+(215 of 220) /routes/console.php
+(216 of 220) /routes/web.php
+(217 of 220) /routes/api.php
+(218 of 220) /composer.json
+(219 of 220) /vendor/
+(220 of 220) /.deployment
+Creating remote file .deployment.running
+
+Renaming:
+(  1 of 168) Renaming /stubs/seeder.stub
+(  2 of 168) Renaming /stubs/request.stub
+(  3 of 168) Renaming /stubs/view-component.stub
+(  4 of 168) Renaming /stubs/policy.stub
+(  5 of 168) Renaming /stubs/model.stub
+(  6 of 168) Renaming /stubs/rule.stub
+(  7 of 168) Renaming /stubs/observer.stub
+(  8 of 168) Renaming /stubs/controller.invokable.stub
+(  9 of 168) Renaming /stubs/markdown-mail.stub
+( 10 of 168) Renaming /stubs/cast.stub
+( 11 of 168) Renaming /stubs/policy.plain.stub
+( 12 of 168) Renaming /stubs/test.stub
+( 13 of 168) Renaming /stubs/controller.stub
+( 14 of 168) Renaming /stubs/markdown-notification.stub
+( 15 of 168) Renaming /stubs/event.stub
+( 16 of 168) Renaming /stubs/controller.model.api.stub
+( 17 of 168) Renaming /stubs/scope.stub
+( 18 of 168) Renaming /stubs/console.stub
+( 19 of 168) Renaming /stubs/migration.stub
+( 20 of 168) Renaming /stubs/controller.nested.api.stub
+( 21 of 168) Renaming /stubs/resource.stub
+( 22 of 168) Renaming /stubs/middleware.stub
+( 23 of 168) Renaming /stubs/job.stub
+( 24 of 168) Renaming /stubs/migration.update.stub
+( 25 of 168) Renaming /stubs/controller.nested.stub
+( 26 of 168) Renaming /stubs/notification.stub
+( 27 of 168) Renaming /stubs/controller.api.stub
+( 28 of 168) Renaming /stubs/cast.inbound.stub
+( 29 of 168) Renaming /stubs/resource-collection.stub
+( 30 of 168) Renaming /stubs/observer.plain.stub
+( 31 of 168) Renaming /stubs/mail.stub
+( 32 of 168) Renaming /stubs/factory.stub
+( 33 of 168) Renaming /stubs/controller.model.stub
+( 34 of 168) Renaming /stubs/migration.create.stub
+( 35 of 168) Renaming /stubs/controller.plain.stub
+( 36 of 168) Renaming /stubs/provider.stub
+( 37 of 168) Renaming /stubs/job.queued.stub
+( 38 of 168) Renaming /stubs/model.pivot.stub
+( 39 of 168) Renaming /stubs/test.unit.stub
+( 40 of 168) Renaming /database/migrations/2022_11_21_091825_create_disposable_emails_table.php
+( 41 of 168) Renaming /database/migrations/2022_11_03_153654_create_login_attempts_table.php
+( 42 of 168) Renaming /database/migrations/2022_11_21_092011_create_leaked_phones_table.php
+( 43 of 168) Renaming /database/migrations/2022_11_21_091811_create_leaked_emails_table.php
+( 44 of 168) Renaming /database/migrations/2022_11_09_090648_create_blacklists_table.php
+( 45 of 168) Renaming /database/migrations/2014_10_12_000000_create_users_table.php
+( 46 of 168) Renaming /database/migrations/2019_08_19_000000_create_failed_jobs_table.php
+( 47 of 168) Renaming /database/seeders/SettingsSeeder.php
+( 48 of 168) Renaming /database/seeders/LeakedPhoneSeeder.php
+( 49 of 168) Renaming /database/seeders/BlacklistTestSeeder.php
+( 50 of 168) Renaming /database/seeders/BlacklistSeeder.php
+( 51 of 168) Renaming /database/seeders/DisposableEmailSeeder.php
+( 52 of 168) Renaming /database/seeders/LeakedEmailSeeder.php
+( 53 of 168) Renaming /database/seeders/DatabaseSeeder.php
+( 54 of 168) Renaming /database/factories/BlacklistFactory.php
+( 55 of 168) Renaming /database/factories/DisposableEmailFactory.php
+( 56 of 168) Renaming /database/factories/LeakedPhoneFactory.php
+( 57 of 168) Renaming /database/factories/LeakedEmailFactory.php
+( 58 of 168) Renaming /database/factories/UserFactory.php
+( 59 of 168) Renaming /.env.testing
+( 60 of 168) Renaming /composer.lock
+( 61 of 168) Renaming /composer.phar
+( 62 of 168) Renaming /tailwind.config.js
+( 63 of 168) Renaming /phpunit.xml
+( 64 of 168) Renaming /bootstrap/app.php
+( 65 of 168) Renaming /bootstrap/cache/services.php
+( 66 of 168) Renaming /bootstrap/cache/packages.php
+( 67 of 168) Renaming /app/Providers/AppServiceProvider.php
+( 68 of 168) Renaming /app/Providers/AuthServiceProvider.php
+( 69 of 168) Renaming /app/Providers/RouteServiceProvider.php
+( 70 of 168) Renaming /app/Providers/HelperServiceProvider.php
+( 71 of 168) Renaming /app/Providers/BroadcastServiceProvider.php
+( 72 of 168) Renaming /app/Providers/EventServiceProvider.php
+( 73 of 168) Renaming /app/Enums/Traits/EnumTrait.php
+( 74 of 168) Renaming /app/Enums/BlacklistTypeEnum.php
+( 75 of 168) Renaming /app/Repositories/BlacklistRepository.php
+( 76 of 168) Renaming /app/Models/Traits/ModelTrait.php
+( 77 of 168) Renaming /app/Models/LeakedEmail.php
+( 78 of 168) Renaming /app/Models/Blacklist.php
+( 79 of 168) Renaming /app/Models/User.php
+( 80 of 168) Renaming /app/Models/DisposableEmail.php
+( 81 of 168) Renaming /app/Models/LoginAttempt.php
+( 82 of 168) Renaming /app/Models/LeakedPhone.php
+( 83 of 168) Renaming /app/Exceptions/Handler.php
+( 84 of 168) Renaming /app/Http/Middleware/VerifyCsrfToken.php
+( 85 of 168) Renaming /app/Http/Middleware/RedirectIfAuthenticated.php
+( 86 of 168) Renaming /app/Http/Middleware/TrimStrings.php
+( 87 of 168) Renaming /app/Http/Middleware/Authenticate.php
+( 88 of 168) Renaming /app/Http/Middleware/TrustProxies.php
+( 89 of 168) Renaming /app/Http/Middleware/ValidateSignature.php
+( 90 of 168) Renaming /app/Http/Middleware/PreventRequestsDuringMaintenance.php
+( 91 of 168) Renaming /app/Http/Middleware/EncryptCookies.php
+( 92 of 168) Renaming /app/Http/Middleware/TrustHosts.php
+( 93 of 168) Renaming /app/Http/Resources/BlacklistResource.php
+( 94 of 168) Renaming /app/Http/Requests/BlacklistSaveRequest.php
+( 95 of 168) Renaming /app/Http/Requests/ConfirmLoginAttemptRequest.php
+( 96 of 168) Renaming /app/Http/Requests/BlacklistDeleteRequest.php
+( 97 of 168) Renaming /app/Http/Requests/DatatableRequest.php
+( 98 of 168) Renaming /app/Http/Requests/SettingSaveRequest.php
+( 99 of 168) Renaming /app/Http/Controllers/Controller.php
+(100 of 168) Renaming /app/Http/Controllers/API/BlacklistController.php
+(101 of 168) Renaming /app/Http/Controllers/API/SettingController.php
+(102 of 168) Renaming /app/Http/Controllers/API/ScoringEngineController.php
+(103 of 168) Renaming /app/Http/Kernel.php
+(104 of 168) Renaming /app/Helpers/StringFunctions.php
+(105 of 168) Renaming /app/Services/LoginService.php
+(106 of 168) Renaming /app/Services/BlacklistService.php
+(107 of 168) Renaming /app/Services/ScoreService.php
+(108 of 168) Renaming /app/Services/ScorePasswordService.php
+(109 of 168) Renaming /app/Services/ScoreEntityService.php
+(110 of 168) Renaming /app/Interfaces/BlacklistInterface.php
+(111 of 168) Renaming /app/Console/Kernel.php
+(112 of 168) Renaming /config/sanctum.php
+(113 of 168) Renaming /config/hashing.php
+(114 of 168) Renaming /config/auth.php
+(115 of 168) Renaming /config/app.php
+(116 of 168) Renaming /config/settings.php
+(117 of 168) Renaming /config/mail.php
+(118 of 168) Renaming /config/services.php
+(119 of 168) Renaming /config/database.php
+(120 of 168) Renaming /config/cache.php
+(121 of 168) Renaming /config/session.php
+(122 of 168) Renaming /config/queue.php
+(123 of 168) Renaming /config/broadcasting.php
+(124 of 168) Renaming /config/view.php
+(125 of 168) Renaming /config/cors.php
+(126 of 168) Renaming /config/logging.php
+(127 of 168) Renaming /config/filesystems.php
+(128 of 168) Renaming /resources/js/bootstrap.js
+(129 of 168) Renaming /resources/js/app.js
+(130 of 168) Renaming /resources/sass/app.scss
+(131 of 168) Renaming /resources/views/welcome.blade.php
+(132 of 168) Renaming /resources/views/layouts/app.blade.php
+(133 of 168) Renaming /tests/CreatesApplication.php
+(134 of 168) Renaming /tests/Feature/BlacklistCheckTest.php
+(135 of 168) Renaming /tests/Feature/EntityScoringTest.php
+(136 of 168) Renaming /tests/Feature/PasswordScoringTest.php
+(137 of 168) Renaming /tests/TestCase.php
+(138 of 168) Renaming /vite.config.js
+(139 of 168) Renaming /.editorconfig
+(140 of 168) Renaming /storage/settings.json
+(141 of 168) Renaming /storage/framework/sessions/UE9CL3KblEVn1Vdsn5mHyAjyJSJN3p6MaSNNjBW8
+(142 of 168) Renaming /storage/framework/sessions/WtGuUl2Wm85E8WdYRhM7qCgETiOVV6E8ndbOGoGt
+(143 of 168) Renaming /README.md
+(144 of 168) Renaming /artisan
+(145 of 168) Renaming /lang/en/passwords.php
+(146 of 168) Renaming /lang/en/auth.php
+(147 of 168) Renaming /lang/en/pagination.php
+(148 of 168) Renaming /lang/en/validation.php
+(149 of 168) Renaming /public/favicon.ico
+(150 of 168) Renaming /public/index.php
+(151 of 168) Renaming /public/build/manifest.json
+(152 of 168) Renaming /public/build/assets/app.500c17f3.js
+(153 of 168) Renaming /public/build/assets/app.878ef8be.css
+(154 of 168) Renaming /public/robots.txt
+(155 of 168) Renaming /public/.htaccess
+(156 of 168) Renaming /package-lock.json
+(157 of 168) Renaming /package.json
+(158 of 168) Renaming /style.editorconfig
+(159 of 168) Renaming /.env
+(160 of 168) Renaming /live/.env
+(161 of 168) Renaming /.env.example
+(162 of 168) Renaming /postcss.config.js
+(163 of 168) Renaming /routes/channels.php
+(164 of 168) Renaming /routes/console.php
+(165 of 168) Renaming /routes/web.php
+(166 of 168) Renaming /routes/api.php
+(167 of 168) Renaming /composer.json
+(168 of 168) Renaming /.deployment
+
+Cleaning temp/cache
+
+After-jobs:
+upload: live/.env .env
+
+Deleting remote file .deployment.running
+
+
+
+Finished at [2023/08/03 16:07] (in 42 seconds)
+----------------------------------------------
+
+
+Started at [2023/08/04 09:04]
+Config file is /Users/petrkaterinak/DevOps/Inove/Authenticator/authenticator-scoring-engine/deployment.ini
+
+Deploying my site
+Live mode
+Connecting to server
+
+Local-jobs:
+local: vite build
+-> vite v3.2.2 building for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+public/build/manifest.json             0.25 KiB
+public/build/assets/app.878ef8be.css   7.34 KiB / gzip: 2.22 KiB
+public/build/assets/app.500c17f3.js    135.11 KiB / gzip: 49.03 KiB
+
+Loaded remote .deployment file
+Scanning files in /Users/petrkaterinak/DevOps/Inove/Authenticator/authenticator-scoring-engine
+Ignoring ./deployment.ini               
+Ignoring ./database/.gitignore          
+Ignoring ./.DS_Store                    
+Ignoring ./bootstrap/cache/.gitignore   
+Ignoring ./deployment.log               
+Ignoring ./node_modules                 
+Ignoring ./storage/debugbar/X52b3d4025b2563693af33ef3e880df0b.json
+Ignoring ./storage/debugbar/Xf671adc49dc1498c1aa68a259cf57316.json
+Ignoring ./storage/debugbar/Xad15260c45cc89bcd41942c8a9330d0a.json
+Ignoring ./storage/debugbar/X8b81c6b52e331c3cd1fd31506386b9da.json
+Ignoring ./storage/debugbar/X88101cef02948588cf604b5b98bac159.json
+Ignoring ./storage/debugbar/X26647b5b86f860a70da7991d5fadfc1b.json
+Ignoring ./storage/debugbar/X41fd45d6c233983748fc4de065e227b5.json
+Ignoring ./storage/debugbar/X6d5b1f6db623cc58581305eb73efda22.json
+Ignoring ./storage/debugbar/X18f473f6dc422fab4fd77c3b282c96c4.json
+Ignoring ./storage/debugbar/X2575c6c5a36dea0c75915b23c9f6cd1d.json
+Ignoring ./storage/debugbar/.gitignore  
+Ignoring ./storage/debugbar/X1f06f3284835b232a54889c639996820.json
+Ignoring ./storage/debugbar/X0389ff4d1469aa428dc1b10f8424484e.json
+Ignoring ./storage/debugbar/Xe7025ccf6c782dc5de2206ca2e1e5c45.json
+Ignoring ./storage/debugbar/X8195b048e2ac18088957c3d81300c572.json
+Ignoring ./storage/debugbar/X9a42ca72205a957db3629dc6a63ca857.json
+Ignoring ./storage/debugbar/Xc1169f521f1998ae270f3434161122c8.json
+Ignoring ./storage/debugbar/X5af5f90e3aa5c3b0c29c0c44fbbdbba2.json
+Ignoring ./storage/debugbar/Xdc264786884a86957f95d977119e38df.json
+Ignoring ./storage/debugbar/Xc6a0bf6f8c97778037dde20d8c2349d9.json
+Ignoring ./storage/app/public/.gitignore
+Ignoring ./storage/app/.gitignore       
+Ignoring ./storage/framework/cache/.gitignore
+Ignoring ./storage/framework/cache/data/c0
+Ignoring ./storage/framework/cache/data/ec
+Ignoring ./storage/framework/cache/data/.gitignore
+Ignoring ./storage/framework/cache/data/b1
+Ignoring ./storage/framework/testing/.gitignore
+Ignoring ./storage/framework/sessions/.gitignore
+Ignoring ./storage/framework/.gitignore 
+Ignoring ./storage/framework/views/3ed0c5d99ab63ca4722fe271b75bea9e469d10aa.php
+Ignoring ./storage/framework/views/.gitignore
+Ignoring ./storage/framework/views/909b81e9f69ff75cd95215c5e25c5414350b9118.php
+Ignoring ./storage/logs/laravel.log     
+Ignoring ./storage/logs/.gitignore      
+Ignoring ./.gitignore                   
+Ignoring ./.gitattributes               
+Ignoring ./.git                         
+Ignoring ./vendor/myclabs               
+Ignoring ./vendor/phpoption             
+Ignoring ./vendor/autoload.php          
+Ignoring ./vendor/hamcrest              
+Ignoring ./vendor/ralouphie             
+Ignoring ./vendor/barryvdh              
+Ignoring ./vendor/egulias               
+Ignoring ./vendor/.DS_Store             
+Ignoring ./vendor/nikic                 
+Ignoring ./vendor/jaybizzle             
+Ignoring ./vendor/guzzlehttp            
+Ignoring ./vendor/nunomaduro            
+Ignoring ./vendor/filp                  
+Ignoring ./vendor/bin                   
+Ignoring ./vendor/theseer               
+Ignoring ./vendor/mockery               
+Ignoring ./vendor/anlutro               
+Ignoring ./vendor/composer              
+Ignoring ./vendor/psy                   
+Ignoring ./vendor/fruitcake             
+Ignoring ./vendor/jenssegers            
+Ignoring ./vendor/league                
+Ignoring ./vendor/nette                 
+Ignoring ./vendor/adrianorosa           
+Ignoring ./vendor/nesbot                
+Ignoring ./vendor/spatie                
+Ignoring ./vendor/livewire              
+Ignoring ./vendor/doctrine              
+Ignoring ./vendor/phpunit               
+Ignoring ./vendor/phar-io               
+Ignoring ./vendor/fakerphp              
+Ignoring ./vendor/brick                 
+Ignoring ./vendor/dflydev               
+Ignoring ./vendor/psr                   
+Ignoring ./vendor/monolog               
+Ignoring ./vendor/voku                  
+Ignoring ./vendor/symfony               
+Ignoring ./vendor/dragonmantank         
+Ignoring ./vendor/ramsey                
+Ignoring ./vendor/mobiledetect          
+Ignoring ./vendor/webmozart             
+Ignoring ./vendor/vlucas                
+Ignoring ./vendor/graham-campbell       
+Ignoring ./vendor/tijsverkoyen          
+Ignoring ./vendor/sebastian             
+Ignoring ./vendor/laravel               
+Ignoring ./vendor/Expectation.php       
+Ignoring ./vendor/maximebf              
+Ignoring ./deployment.phar              
+Ignoring ./.idea                        
+Already synchronized.
+
+
+
+Finished at [2023/08/04 09:04] (in 2 seconds)
+----------------------------------------------
+
+
+Started at [2023/08/04 09:07]
+Config file is /Users/petrkaterinak/DevOps/Inove/Authenticator/authenticator-scoring-engine/deployment.ini
+
+Deploying my site
+Live mode
+Connecting to server
+
+Local-jobs:
+local: vite build
+-> vite v3.2.2 building for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+public/build/manifest.json             0.25 KiB
+public/build/assets/app.878ef8be.css   7.34 KiB / gzip: 2.22 KiB
+public/build/assets/app.500c17f3.js    135.11 KiB / gzip: 49.03 KiB
+
+Loaded remote .deployment file
+Scanning files in /Users/petrkaterinak/DevOps/Inove/Authenticator/authenticator-scoring-engine
+Ignoring ./deployment.ini               
+Ignoring ./database/.gitignore          
+Ignoring ./.DS_Store                    
+Ignoring ./bootstrap/cache/.gitignore   
+Ignoring ./deployment.log               
+Ignoring ./node_modules                 
+Ignoring ./storage/debugbar/X52b3d4025b2563693af33ef3e880df0b.json
+Ignoring ./storage/debugbar/Xf671adc49dc1498c1aa68a259cf57316.json
+Ignoring ./storage/debugbar/Xad15260c45cc89bcd41942c8a9330d0a.json
+Ignoring ./storage/debugbar/X8b81c6b52e331c3cd1fd31506386b9da.json
+Ignoring ./storage/debugbar/X88101cef02948588cf604b5b98bac159.json
+Ignoring ./storage/debugbar/X26647b5b86f860a70da7991d5fadfc1b.json
+Ignoring ./storage/debugbar/X41fd45d6c233983748fc4de065e227b5.json
+Ignoring ./storage/debugbar/X6d5b1f6db623cc58581305eb73efda22.json
+Ignoring ./storage/debugbar/X18f473f6dc422fab4fd77c3b282c96c4.json
+Ignoring ./storage/debugbar/X2575c6c5a36dea0c75915b23c9f6cd1d.json
+Ignoring ./storage/debugbar/.gitignore  
+Ignoring ./storage/debugbar/X1f06f3284835b232a54889c639996820.json
+Ignoring ./storage/debugbar/X0389ff4d1469aa428dc1b10f8424484e.json
+Ignoring ./storage/debugbar/Xe7025ccf6c782dc5de2206ca2e1e5c45.json
+Ignoring ./storage/debugbar/X8195b048e2ac18088957c3d81300c572.json
+Ignoring ./storage/debugbar/X9a42ca72205a957db3629dc6a63ca857.json
+Ignoring ./storage/debugbar/Xc1169f521f1998ae270f3434161122c8.json
+Ignoring ./storage/debugbar/X5af5f90e3aa5c3b0c29c0c44fbbdbba2.json
+Ignoring ./storage/debugbar/Xdc264786884a86957f95d977119e38df.json
+Ignoring ./storage/debugbar/Xc6a0bf6f8c97778037dde20d8c2349d9.json
+Ignoring ./storage/app/public/.gitignore
+Ignoring ./storage/app/.gitignore       
+Ignoring ./storage/framework/cache/.gitignore
+Ignoring ./storage/framework/cache/data/c0
+Ignoring ./storage/framework/cache/data/ec
+Ignoring ./storage/framework/cache/data/.gitignore
+Ignoring ./storage/framework/cache/data/b1
+Ignoring ./storage/framework/testing/.gitignore
+Ignoring ./storage/framework/sessions/.gitignore
+Ignoring ./storage/framework/.gitignore 
+Ignoring ./storage/framework/views/3ed0c5d99ab63ca4722fe271b75bea9e469d10aa.php
+Ignoring ./storage/framework/views/.gitignore
+Ignoring ./storage/framework/views/909b81e9f69ff75cd95215c5e25c5414350b9118.php
+Ignoring ./storage/logs/laravel.log     
+Ignoring ./storage/logs/.gitignore      
+Ignoring ./.gitignore                   
+Ignoring ./.gitattributes               
+Ignoring ./.git                         
+Ignoring ./vendor/myclabs               
+Ignoring ./vendor/phpoption             
+Ignoring ./vendor/autoload.php          
+Ignoring ./vendor/hamcrest              
+Ignoring ./vendor/ralouphie             
+Ignoring ./vendor/barryvdh              
+Ignoring ./vendor/egulias               
+Ignoring ./vendor/.DS_Store             
+Ignoring ./vendor/nikic                 
+Ignoring ./vendor/jaybizzle             
+Ignoring ./vendor/guzzlehttp            
+Ignoring ./vendor/nunomaduro            
+Ignoring ./vendor/filp                  
+Ignoring ./vendor/bin                   
+Ignoring ./vendor/theseer               
+Ignoring ./vendor/mockery               
+Ignoring ./vendor/anlutro               
+Ignoring ./vendor/composer              
+Ignoring ./vendor/psy                   
+Ignoring ./vendor/fruitcake             
+Ignoring ./vendor/jenssegers            
+Ignoring ./vendor/league                
+Ignoring ./vendor/nette                 
+Ignoring ./vendor/adrianorosa           
+Ignoring ./vendor/nesbot                
+Ignoring ./vendor/spatie                
+Ignoring ./vendor/livewire              
+Ignoring ./vendor/doctrine              
+Ignoring ./vendor/phpunit               
+Ignoring ./vendor/phar-io               
+Ignoring ./vendor/fakerphp              
+Ignoring ./vendor/brick                 
+Ignoring ./vendor/dflydev               
+Ignoring ./vendor/psr                   
+Ignoring ./vendor/monolog               
+Ignoring ./vendor/voku                  
+Ignoring ./vendor/symfony               
+Ignoring ./vendor/dragonmantank         
+Ignoring ./vendor/ramsey                
+Ignoring ./vendor/mobiledetect          
+Ignoring ./vendor/webmozart             
+Ignoring ./vendor/vlucas                
+Ignoring ./vendor/graham-campbell       
+Ignoring ./vendor/tijsverkoyen          
+Ignoring ./vendor/sebastian             
+Ignoring ./vendor/laravel               
+Ignoring ./vendor/Expectation.php       
+Ignoring ./vendor/maximebf              
+Ignoring ./deployment.phar              
+Ignoring ./.idea                        
+Already synchronized.
+
+
+
+Finished at [2023/08/04 09:07] (in 2 seconds)
+----------------------------------------------
+
+
