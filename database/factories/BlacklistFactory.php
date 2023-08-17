@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Enums\GenderEnum;
-use Illuminate\Support\Str;
 use App\Enums\BlacklistTypeEnum;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +18,7 @@ class BlacklistFactory extends Factory
         $types = BlacklistTypeEnum::cases();
         $type = $types[array_rand($types)];
         $value = match ($type) {
-            BlacklistTypeEnum::DOMAIN => fake()->domainName,
+            BlacklistTypeEnum::DOMAIN => fake()->unique()->domainName,
             BlacklistTypeEnum::EMAIL => fake()->email,
             BlacklistTypeEnum::IP => fake()->boolean(90) ? fake()->ipv4 : [fake()->ipv4, fake()->ipv4],
         };

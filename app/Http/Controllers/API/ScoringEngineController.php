@@ -50,6 +50,7 @@ class ScoringEngineController extends Controller
                 'blacklist_type' => $blacklistType,
                 'blacklist_id' => $blaclistId,
                 'login_attempt_id' => $loginAttempt->getId(),
+                'success' => false,
             ]);
         }
 
@@ -67,7 +68,7 @@ class ScoringEngineController extends Controller
 
             return response()->json(['score' => $loginScore, 'password' => $scorePassword, 'entity' => $scoreEntity, 'login_attempt_id' => $loginAttempt->getId()]);
         } catch (\Throwable $throwable) {
-            return response()->json(['error' => $throwable->getMessage(), 'code' => $throwable->getCode(), 'file' => $throwable->getFile(), 'line' => $throwable->getLine()], 400);
+            return response()->json(['error' => $throwable->getMessage(), 'code' => $throwable->getCode(), 'file' => $throwable->getFile(), 'line' => $throwable->getLine(), 'trace' => $throwable->getTrace()], 400);
         }
     }
 

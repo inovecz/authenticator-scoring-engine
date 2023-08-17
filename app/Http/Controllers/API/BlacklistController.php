@@ -60,6 +60,23 @@ class BlacklistController extends Controller
             ->searchByType($type, $filter, $search)
             ->count();
 
+        if ($type === BlacklistTypeEnum::IP) {
+            $items = $items->map(function (Blacklist $item) {
+                $value = $item->getValue();
+                if (is_array($value)) {
+                    foreach ($value as $key => $ip) {
+                        $value[$key] = ip2long($ip);
+                    }
+                    asort($value);
+                    foreach ($value as $key => $ip) {
+                        $value[$key] = long2ip($ip);
+                    }
+                    $item->value = array_values($value);
+                }
+                return $item;
+            });
+        }
+
         $blacklistService = new BlacklistService();
         $datatable = $blacklistService->formatDatatable($items, [
             'page_length' => $pageLength,

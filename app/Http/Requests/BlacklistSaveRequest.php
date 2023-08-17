@@ -20,7 +20,7 @@ class BlacklistSaveRequest extends FormRequest
         return [
             'id' => 'sometimes|required|integer|exists:blacklists,id',
             'type' => ['required', new Enum(BlacklistTypeEnum::class)],
-            'value' => 'required|string',
+            'value' => 'required',
             'reason' => 'sometimes|nullable|string',
             'active' => 'sometimes|required|boolean',
         ];
