@@ -58,14 +58,15 @@ class ScoreEntityService extends ScoreService
         }
 
         $maxGeoDataScore = $this->getMethodMaxScore(__FUNCTION__);
-        $columns = ['country_code', 'country', 'city', 'region', 'longitude', 'latitude', 'ip'];
+        //$columns = ['country_code', 'country', 'city', 'region', 'longitude', 'latitude', 'ip'];
+        $columns = ['ip'];
         $loginData = array_filter($currentLoginData, static fn($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
-        $mostFrequentDataObject = $this->getMostFrequentData($entity, $columns);
+        $mostFrequentDataObject = $this->getMostFrequentGeoData($entity, $columns);
         if (!$mostFrequentDataObject) {
             return $maxGeoDataScore;
         }
-        $loginData['longitude'] = $loginData['longitude'] ? round($loginData['longitude'], 2) : 0.0;
-        $loginData['latitude'] = $loginData['latitude'] ? round($loginData['latitude'], 2) : 0.0;
+        //$loginData['longitude'] = $loginData['longitude'] ? round($loginData['longitude'], 2) : 0.0;
+        //$loginData['latitude'] = $loginData['latitude'] ? round($loginData['latitude'], 2) : 0.0;
         return (int) ($maxGeoDataScore / count($columns) * count(array_diff((array) $mostFrequentDataObject, $loginData)));
     }
 
@@ -91,6 +92,21 @@ class ScoreEntityService extends ScoreService
     }
 
     private function getMostFrequentData(string $entity, array $columns): ?\stdClass
+    {
+        $mostFrequentDataObject = DB::table('login_attempts');
+        foreach ($columns as $column) {
+            $mostFrequentDataObject = $mostFrequentDataObject->selectSub(DB::table('login_attempts')
+                ->select($column)
+                ->where('entity', $entity)
+                ->where('successful', true)
+                ->groupBy($column)
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(1), $column);
+        }
+        return $mostFrequentDataObject->distinct()->first();
+    }
+
+    private function getMostFrequentGeoData(string $entity, array $columns): ?\stdClass
     {
         $mostFrequentDataObject = DB::table('login_attempts');
         foreach ($columns as $column) {
