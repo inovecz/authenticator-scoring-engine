@@ -6,53 +6,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Location extends Model
+class IpAddress extends Model
 {
 
     // <editor-fold desc="Region: STATE DEFINITION">
-    protected $guarded = ['id', 'created_at', 'updated_at'];
-    protected $casts = [
-        'longitude' => 'float',
-        'latitude' => 'float',
-    ];
+    protected $primaryKey = 'ip';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    protected $guarded = ['created_at', 'updated_at'];
     // </editor-fold desc="Region: STATE DEFINITION">
 
     // <editor-fold desc="Region: RELATIONS">
     public function loginAttempts(): HasMany
     {
-        return $this->hasMany(LoginAttempt::class, 'location_id', 'id');
+        return $this->hasMany(LoginAttempt::class, 'ip', 'ip');
     }
     // </editor-fold desc="Region: RELATIONS">
 
     // <editor-fold desc="Region: GETTERS">
-    public function getCity(): ?string
+    public function getIP(): string
     {
-        return $this->city;
-    }
-
-    public function getRegion(): ?string
-    {
-        return $this->region;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function getCountryCode(): ?string
-    {
-        return $this->country_code;
-    }
-
-    public function getLongitude(): ?float
-    {
-        return $this->longitude;
-    }
-
-    public function getLatitude(): ?float
-    {
-        return $this->latitude;
+        return $this->ip;
     }
 
     public function getAttempts(): int
@@ -76,20 +50,12 @@ class Location extends Model
     }
     // </editor-fold desc="Region: GETTERS">
 
-    // <editor-fold desc="Region: COMPUTED GETTERS">
-    // </editor-fold desc="Region: COMPUTED GETTERS">
-
     // <editor-fold desc="Region: ARRAY GETTERS">
     public function getToArrayDefault(): array
     {
         return [
-            'location_id' => $this->id,
-            'city' => $this->getCity(),
-            'region' => $this->getRegion(),
-            'country' => $this->getCountry(),
-            'country_code' => $this->getCountryCode(),
-            'longitude' => $this->getLongitude(),
-            'latitude' => $this->getLatitude(),
+            'ip_address_id' => $this->getId(),
+            'ip' => $this->getIP(),
             'attempts' => $this->getAttempts(),
             'successful_attempts' => $this->getSuccessfulAttempts(),
             'success_rate' => $this->getSuccessRate(),
@@ -110,26 +76,27 @@ class Location extends Model
     // <editor-fold desc="Region: FUNCTIONS">
     public function addSuccessAttempt(): float
     {
-        $newAttempts = $this->getAttempts() + 1;
-        $newSuccessfulAttempts = $this->getSuccessfulAttempts() + 1;
         $this->update([
-            'attempts' => $newAttempts,
-            'successful_attempts' => $newSuccessfulAttempts,
+            'attempts' => $this->getAttempts() + 1,
+            'successful_attempts' => $this->getSuccessfulAttempts() + 1,
         ]);
         return $this->refresh()->getSuccessRate();
     }
 
-    public function addFailedAttempt(): float
+    public function markAttemptSuccessful(): float
     {
-        $newAttempts = $this->getAttempts() + 1;
         $this->update([
-            'attempts' => $newAttempts,
+            'successful_attempts' => $this->getSuccessfulAttempts() + 1,
+        ]);
+        return $this->refresh()->getSuccessRate();
+    }
+
+    public function addAttempt(): float
+    {
+        $this->update([
+            'attempts' => $this->getAttempts() + 1,
         ]);
         return $this->refresh()->getSuccessRate();
     }
     // </editor-fold desc="Region: FUNCTIONS">
-
-    // <editor-fold desc="Region: SCOPES">
-    // </editor-fold desc="Region: SCOPES">
-
 }

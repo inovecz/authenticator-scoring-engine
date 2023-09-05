@@ -29,6 +29,7 @@ class LoginService
             ],
             $this->getGeoData($clientIp),
             [
+                'user_agent' => $userAgent,
                 'device' => $device,
                 'os' => $agent->platform() ?: 'unknown',
                 'browser' => $agent->browser() ?: 'unknown',
@@ -38,9 +39,6 @@ class LoginService
 
     private function getGeoData(string $ip): array
     {
-        if ($location = Location::where('ip', $ip)->first()) {
-            return $location->getToArray();
-        }
         try {
             $geoData = GeoLocation::lookup($ip)->toArray();
         } catch (GeoLocationException $exception) {
@@ -50,7 +48,6 @@ class LoginService
             $geoData['country_code'] = $geoData['countryCode'];
             unset($geoData['countryCode']);
         }
-        Location::create(['ip' => $ip, ...$geoData]);
-        return $geoData ?: [];
+        return Location::updateOrCreate($geoData)->getToArray();
     }
 }

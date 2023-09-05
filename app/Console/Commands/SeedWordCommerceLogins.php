@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
-use App\Models\Location;
 use App\Models\ServerUser;
 use Jenssegers\Agent\Agent;
 use App\Models\LoginAttempt;
 use Illuminate\Console\Command;
-use Adrianorosa\GeoLocation\GeoLocation;
-use Adrianorosa\GeoLocation\GeoLocationException;
 
 class SeedWordCommerceLogins extends Command
 {
@@ -34,20 +31,20 @@ class SeedWordCommerceLogins extends Command
             $bar->advance();
 
             $ip = hex_to_ip($record['IP']);
-            $location = Location::where(['ip' => $ip])->first();
+            //$location = Location::where(['ip' => $ip])->first();
             $userHash = $this->getUserHash($record['username']);
-            if (!$location) {
-                try {
-                    $geoData = GeoLocation::lookup($ip)->toArray();
-                } catch (GeoLocationException $exception) {
-                    $geoData = [];
-                }
-                if (isset($geoData['countryCode'])) {
-                    $geoData['country_code'] = $geoData['countryCode'];
-                    unset($geoData['countryCode']);
-                }
-                Location::create(['ip' => $ip, ...$geoData]);
-            }
+            //if (!$location) {
+            //    try {
+            //        $geoData = GeoLocation::lookup($ip)->toArray();
+            //    } catch (GeoLocationException $exception) {
+            //        $geoData = [];
+            //    }
+            //    if (isset($geoData['countryCode'])) {
+            //        $geoData['country_code'] = $geoData['countryCode'];
+            //        unset($geoData['countryCode']);
+            //    }
+            //    Location::create(['ip' => $ip, ...$geoData]);
+            //}
             if ($record['UA']) {
                 $agent = new Agent();
                 $agent->setUserAgent($record['UA']);

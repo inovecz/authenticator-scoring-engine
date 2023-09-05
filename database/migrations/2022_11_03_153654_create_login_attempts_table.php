@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->text('url')->nullable();
             $table->text('referer')->nullable();
             $table->string('ip', 15)->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->text('user_agent')->nullable();
             $table->string('device')->nullable();
             $table->string('os')->nullable();
@@ -29,7 +30,8 @@ return new class extends Migration {
             $table->text('action_data')->nullable();
             $table->timestamps();
 
-            $table->foreign('ip')->references('ip')->on('locations');
+            $table->foreign('ip')->references('ip')->on('ip_addresses');
+            $table->foreign('location_id')->references('id')->on('locations');
         });
     }
 
