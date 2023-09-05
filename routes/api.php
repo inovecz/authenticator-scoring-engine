@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\SettingController;
 use App\Http\Controllers\API\BlacklistController;
+use App\Http\Controllers\API\LoginAttemptController;
 use App\Http\Controllers\API\ScoringEngineController;
 
 Route::post('score-login', [ScoringEngineController::class, 'scoreLogin']);
@@ -16,6 +17,10 @@ Route::prefix('blacklists')->group(function () {
     Route::get('/count', [BlacklistController::class, 'getCount']);
     Route::post('/{type}/datatable', [BlacklistController::class, 'getDatatable'])->whereIn('type', \App\Enums\BlacklistTypeEnum::values());
     Route::get('/{blacklist}/toggle-active', [BlacklistController::class, 'toggleActive'])->where('blacklist', '[0-9]+');
+});
+
+Route::prefix('login-attempts')->group(function () {
+    Route::post('/datatable', [LoginAttemptController::class, 'getDatatable']);
 });
 
 Route::prefix('settings')->group(function () {

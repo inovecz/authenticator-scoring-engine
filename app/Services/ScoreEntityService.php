@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Location;
+use App\Models\IpAddress;
 use App\Models\LeakedEmail;
 use App\Models\LeakedPhone;
+use Illuminate\Support\Str;
+use App\Models\LoginAttempt;
+use App\Models\MlTimerSuccess;
+use App\Models\MlMouseSuccess;
 use App\Models\DisposableEmail;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class ScoreEntityService extends ScoreService
 {
@@ -24,18 +30,14 @@ class ScoreEntityService extends ScoreService
         $leakedPhoneScore = !$phone ? 0 : $this->scoreLeakedPhone($phone);
         $entityScore += $leakedPhoneScore;
 
-        $geoDataScore = $this->scoreGeoData($entity, $currentLoginData);
-        $entityScore += $geoDataScore;
+        $mlScore = $this->scoreEntityBehavior($entity, $currentLoginData);
+        $entityScore += $mlScore;
 
-        $deviceScore = $this->scoreDevice($entity, $currentLoginData);
-        $entityScore += $deviceScore;
-
-        $blacklistScore = $this->scoreBlacklist($email, $currentLoginData['ip']);
+        $blacklistScore = $this->scoreBlacklist($email, $currentLoginData['ip'], $currentLoginData['user_agent']);
         $entityScore += $blacklistScore;
 
         return [
-            'geo' => $geoDataScore,
-            'device' => $deviceScore,
+            'ml_score' => $mlScore,
             'leaks' => [
                 'email' => $leakedEmailScore,
                 'phone' => $leakedPhoneScore,
@@ -47,78 +49,76 @@ class ScoreEntityService extends ScoreService
     }
 
     /**
-     * @maxMethodScore 20
-     * @settings scoring.entity.geodata
+     * @maxMethodScore 100
+     * @settings scoring.entity.behavior
      * @return int scoreGeoData (Same as usual = 0, Totally different = 20)
      */
-    private function scoreGeoData(string $entity, array $currentLoginData): int
+    private function scoreEntityBehavior(string $entity, array $currentLoginData): int
     {
-        if (!setting('scoring.entity.geodata')) {
+        $maxEntityBehaviorScore = $this->getMethodMaxScore(__FUNCTION__);
+        if (!setting('scoring.entity.behavior')) {
             return 0;
         }
 
-        $maxGeoDataScore = $this->getMethodMaxScore(__FUNCTION__);
-        //$columns = ['country_code', 'country', 'city', 'region', 'longitude', 'latitude', 'ip'];
-        $columns = ['ip'];
-        $loginData = array_filter($currentLoginData, static fn($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
-        $mostFrequentDataObject = $this->getMostFrequentGeoData($entity, $columns);
-        if (!$mostFrequentDataObject) {
-            return $maxGeoDataScore;
+        /** GlobalScore */
+        $ipGlobal = IpAddress::where('ip', $currentLoginData['ip'])->first()->getMlSuccessRate();
+        $locationGlobal = Location::where([
+            'country' => $currentLoginData['country'],
+            'region' => $currentLoginData['region'],
+            'city' => $currentLoginData['city'],
+        ])->first()->getMlSuccessRate();
+        $mouseGlobal = MlMouseSuccess::getMlSuccessRateByValue($currentLoginData['mouse_avg_accel']);
+        $timerGlobal = MlTimerSuccess::getMlSuccessRateByValue($currentLoginData['timer']);
+        $globalScore = weighted_average([$ipGlobal, $locationGlobal, $mouseGlobal, $timerGlobal], [25, 25, 25, 25]);
+
+        $loginAttempts = LoginAttempt::with('location')->where('entity', $entity)->get();
+        /** @var LoginAttempt $attempt */
+        foreach ($loginAttempts as $attempt) {
+            $attempt->locationComposite = $attempt->location->getCountry().$attempt->location->getRegion().$attempt->location->getCity();
+            $attempt->userAgentComposite = $attempt->getDevice().$attempt->getOS().$attempt->getBrowser();
         }
-        //$loginData['longitude'] = $loginData['longitude'] ? round($loginData['longitude'], 2) : 0.0;
-        //$loginData['latitude'] = $loginData['latitude'] ? round($loginData['latitude'], 2) : 0.0;
-        return (int) ($maxGeoDataScore / count($columns) * count(array_diff((array) $mostFrequentDataObject, $loginData)));
+
+        /** IP */
+        $sameIpAttempts = $loginAttempts->filter(fn(LoginAttempt $attempt) => $attempt->getIP() === $currentLoginData['ip']);
+        $ipEntity = $this->calculateByML($sameIpAttempts);
+        /** Location */
+        $sameLocationAttempts = $loginAttempts->filter(fn(LoginAttempt $attempt) => $attempt->locationComposite === $currentLoginData['country'].$currentLoginData['region'].$currentLoginData['city']);
+        $locationEntity = $this->calculateByML($sameLocationAttempts);
+        /** Mouse */
+        $avgAccel = $currentLoginData['mouse_avg_accel'];
+        $rangeMin = floor_to($avgAccel, 100);
+        $rangeMax = ceil_to($avgAccel, 100);
+        $sameMouseAttempts = $loginAttempts->filter(fn(LoginAttempt $attempt) => $attempt->getMouseAvgAccel() >= $rangeMin && $attempt->getMouseAvgAccel() < $rangeMax);
+        $mouseEntity = $this->calculateByML($sameMouseAttempts);
+        /** Timer */
+        $timer = $currentLoginData['timer'];
+        $rangeMin = floor_to($timer, 2);
+        $rangeMax = ceil_to($timer, 2);
+        $sameMouseAttempts = $loginAttempts->filter(fn(LoginAttempt $attempt) => $attempt->getTimer() >= $rangeMin && $attempt->getTimer() < $rangeMax);
+        $timerEntity = $this->calculateByML($sameMouseAttempts);
+        /** User agent */
+        $sameUserAgentAttempts = $loginAttempts->filter(fn(LoginAttempt $attempt) => $attempt->userAgentComposite === $currentLoginData['device'].$currentLoginData['os'].$currentLoginData['browser']);
+        $userAgentLocal = $this->calculateByML($sameUserAgentAttempts);
+
+        $entityScore = weighted_average([$ipEntity, $locationEntity, $mouseEntity, $timerEntity, $userAgentLocal], [18.75, 18.75, 18.75, 18.75, 25]);
+
+        $totalScore = weighted_average([$globalScore, $entityScore], [40, 60]);
+
+        $maxScore = $this->getMethodMaxScore(__FUNCTION__);
+        return (int) ((1 - $totalScore) * $maxScore);
     }
 
-    /**
-     * @maxMethodScore 20
-     * @settings scoring.entity.device
-     * @return int scoreDevice (Same as usual = 0, Totally different = 20)
-     */
-    private function scoreDevice(string $entity, array $currentLoginData): int
+    private function calculateByML(Collection $loginAttempts): float
     {
-        if (!setting('scoring.entity.device')) {
-            return 0;
+        if ($loginAttempts->isEmpty()) {
+            return 0.5;
         }
-
-        $maxDeviceScore = $this->getMethodMaxScore(__FUNCTION__);
-        $columns = ['device', 'os', 'browser'];
-        $loginData = array_filter($currentLoginData, static fn($value, $key) => in_array($key, $columns, true), ARRAY_FILTER_USE_BOTH);
-        $mostFrequentDataObject = $this->getMostFrequentData($entity, $columns);
-        if (!$mostFrequentDataObject) {
-            return $maxDeviceScore;
-        }
-        return (int) ($maxDeviceScore / count($columns) * count(array_diff((array) $mostFrequentDataObject, $loginData)));
-    }
-
-    private function getMostFrequentData(string $entity, array $columns): ?\stdClass
-    {
-        $mostFrequentDataObject = DB::table('login_attempts');
-        foreach ($columns as $column) {
-            $mostFrequentDataObject = $mostFrequentDataObject->selectSub(DB::table('login_attempts')
-                ->select($column)
-                ->where('entity', $entity)
-                ->where('successful', true)
-                ->groupBy($column)
-                ->orderByRaw('COUNT(*) DESC')
-                ->limit(1), $column);
-        }
-        return $mostFrequentDataObject->distinct()->first();
-    }
-
-    private function getMostFrequentGeoData(string $entity, array $columns): ?\stdClass
-    {
-        $mostFrequentDataObject = DB::table('login_attempts');
-        foreach ($columns as $column) {
-            $mostFrequentDataObject = $mostFrequentDataObject->selectSub(DB::table('login_attempts')
-                ->select($column)
-                ->where('entity', $entity)
-                ->where('successful', true)
-                ->groupBy($column)
-                ->orderByRaw('COUNT(*) DESC')
-                ->limit(1), $column);
-        }
-        return $mostFrequentDataObject->distinct()->first();
+        $machineLearningService = new MachineLearningService();
+        $inputs = $loginAttempts->map(fn(LoginAttempt $attempt) => [1])->toArray();
+        $outputs = $loginAttempts->map(fn(LoginAttempt $attempt) => $attempt->isSuccessful() ? 'successful' : 'unsuccessful')->toArray();
+        $machineLearningService->setDataset($inputs, $outputs);
+        $predicted = $machineLearningService->predict();
+        return $predicted['successful'];
     }
 
     /**
@@ -172,7 +172,7 @@ class ScoreEntityService extends ScoreService
      * @settings scoring.entity.blacklist
      * @return int scoreBlacklist (Not blacklisted = 0, Blacklisted = 20)
      */
-    private function scoreBlacklist(string $email, string $ip): int
+    private function scoreBlacklist(string $email, string $ip, string $userAgent): int
     {
         if (!setting('scoring.entity.blacklist')) {
             return 0;
@@ -180,6 +180,21 @@ class ScoreEntityService extends ScoreService
 
         $maxBlacklistScore = $this->getMethodMaxScore(__FUNCTION__);
         $blacklistService = new BlacklistService();
-        return $blacklistService->isBlacklisted($email, $ip) ? $maxBlacklistScore : 0;
+        return $blacklistService->isBlacklisted($email, $ip, $userAgent, true)[0] ? $maxBlacklistScore : 0;
+    }
+
+    /**
+     * @maxMethodScore 20
+     * @settings scoring.entity.operating_system
+     * @return int scoreOperatingSystem (Not blacklisted = 0, Blacklisted = 20)
+     */
+    private function scoreOperatingSystem(string $userAgent): int
+    {
+        if (!setting('scoring.entity.operating_system')) {
+            return 0;
+        }
+
+        $maxBlacklistScore = $this->getMethodMaxScore(__FUNCTION__);
+        return Str::of($userAgent)->contains('Kali Linux') ? $maxBlacklistScore : 0;
     }
 }

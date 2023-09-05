@@ -9,14 +9,8 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration {
     public static function up(): void
     {
-        Schema::create('locations', function (Blueprint $table) {
-            $table->id();
-            $table->string('city', 128)->index()->nullable();
-            $table->string('region', 128)->nullable();
-            $table->string('country', 128)->nullable();
-            $table->string('country_code', 4)->nullable();
-            $table->double('longitude')->nullable();
-            $table->double('latitude')->nullable();
+        Schema::create('ip_addresses', function (Blueprint $table) {
+            $table->string('ip', 15)->primary()->index();
             $table->unsignedBigInteger('attempts')->default(0);
             $table->unsignedBigInteger('successful_attempts')->default(0);
             $table->double('success_rate')->default(0.0);
@@ -27,6 +21,6 @@ return new class extends Migration {
 
     public static function down(): void
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('ip_addresses');
     }
 };

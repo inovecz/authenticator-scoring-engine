@@ -10,7 +10,7 @@ class HelperServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $helperFileNames = ['StringFunctions'];
+        $helperFileNames = ['StringFunctions', 'OtherFunctions', 'NumberFunctions', 'ArrayFunctions'];
         foreach ($helperFileNames as $helperFileName) {
             $file = app_path("Helpers/$helperFileName.php");
             if (file_exists($file)) {
