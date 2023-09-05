@@ -61,12 +61,12 @@ class ScoreEntityService extends ScoreService
         }
 
         /** GlobalScore */
-        $ipGlobal = IpAddress::where('ip', $currentLoginData['ip'])->first()->getMlSuccessRate();
+        $ipGlobal = IpAddress::where('ip', $currentLoginData['ip'])->first()?->getMlSuccessRate() ?? 0.5;
         $locationGlobal = Location::where([
             'country' => $currentLoginData['country'],
             'region' => $currentLoginData['region'],
             'city' => $currentLoginData['city'],
-        ])->first()->getMlSuccessRate();
+        ])->first()?->getMlSuccessRate() ?? 0.5;
         $mouseGlobal = MlMouseSuccess::getMlSuccessRateByValue($currentLoginData['mouse_avg_accel']);
         $timerGlobal = MlTimerSuccess::getMlSuccessRateByValue($currentLoginData['timer']);
         $globalScore = weighted_average([$ipGlobal, $locationGlobal, $mouseGlobal, $timerGlobal], [25, 25, 25, 25]);

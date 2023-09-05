@@ -44,10 +44,12 @@ class LoginService
         } catch (GeoLocationException $exception) {
             $geoData = [];
         }
-        if (isset($geoData['countryCode'])) {
+        if (array_key_exists('countryCode', $geoData)) {
             $geoData['country_code'] = $geoData['countryCode'];
             unset($geoData['countryCode']);
         }
-        return Location::updateOrCreate($geoData)->getToArray();
+        $location = Location::updateOrCreate($geoData);
+        $location->refresh();
+        return $location->getToArray();
     }
 }

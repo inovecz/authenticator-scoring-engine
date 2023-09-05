@@ -31,6 +31,7 @@ class LoginAttempt extends Model
         parent::boot();
         static::creating(static function (LoginAttempt $model) {
             $ipAddress = IpAddress::firstOrCreate(['ip' => $model->getIP()]);
+            $ipAddress->refresh();
             if ($model->isSuccessful()) {
                 $ipAddress->addSuccessfulAttempt();
             } else {
