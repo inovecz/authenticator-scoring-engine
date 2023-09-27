@@ -41,40 +41,31 @@ class ExactSyncService {
      * prepare data -> normalize data into our format, sanitize them and write into db
      */
     public function processRow($row) {
-
         $newArray = [];
         foreach($this->getMapping() as $oldKey => $newKey) {
-
             $value = $row[$oldKey];
             if($oldKey === 'fail') {
                 // convert value
                 $value = $value === '1' ? 0 : 1;
             }
             $newArray[$newKey] = $value;
-
             $this->sanitizeData($newArray);
             $this->writeData($newArray);
-
         }
-
     }
 
     /**
      * query to db to fetch last data from last attempt of fetching data
      */
     public function fetchResult() {
-
         $lastTime = $this->getLastAttempt();
         $result = mysqli_query($this->connector, "SELECT * FROM wp_wflogins WHERE ctime > ".$lastTime);
         return $result;
-
     }
 
     public function connect() {
-
         $mysqli = mysqli_connect(env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'));
         $this->connector = $mysqli;
-
     }
 
     public function getMapping() {
