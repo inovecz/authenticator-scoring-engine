@@ -49,9 +49,9 @@ class ExactSyncService {
                 $value = $value === '1' ? 0 : 1;
             }
             $newArray[$newKey] = $value;
-            $this->sanitizeData($newArray);
-            $this->writeData($newArray);
         }
+        $this->sanitizeData($newArray);
+        $this->writeData($newArray);
     }
 
     /**
