@@ -11,12 +11,12 @@ class CodacoSyncService {
         DEFINED DATA MAP (structure):
               THEIR COLUMN => OUR COLUMN
              'id' (int)  => 'id' (int)             
-             'hitID' (int)  => 'attemptId' (int)
+             'attemptId' (int)  => 'attemptId' (int)
              'time' (string) => 'time' (timestamp) -> need to conver to unix timestamp
              'success' (bool) => 'success' (bool)
-             'action' (string) => 'state' (string)
+             'state' (string) => 'state' (string)
              'ip' (string) => 'ip' (string) -> need to convert
-             'UA' (string) => 'userAgent' (string)
+             'userAgent' (string) => 'userAgent' (string)
     */
 
     use InteractsWithIO;
