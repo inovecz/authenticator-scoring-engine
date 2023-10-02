@@ -12,7 +12,7 @@ class CodacoSyncService {
               THEIR COLUMN => OUR COLUMN
              'id' (int)  => 'id' (int)             
              'hitID' (int)  => 'attemptId' (int)
-             'ctime' (string) => 'time' (timestamp) -> need to conver to unix timestamp
+             'time' (string) => 'time' (timestamp) -> need to conver to unix timestamp
              'success' (bool) => 'success' (bool)
              'action' (string) => 'state' (string)
              'IP' (string) => 'ip' (string) -> need to convert
