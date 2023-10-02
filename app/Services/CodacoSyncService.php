@@ -13,7 +13,7 @@ class CodacoSyncService {
              'id' (int)  => 'id' (int)             
              'hitID' (int)  => 'attemptId' (int)
              'ctime' (string) => 'time' (timestamp) -> need to conver to unix timestamp
-             'fail' (bool) => 'success' (bool) -> need to convert 1 to 0 and vice versa
+             'success' (bool) => 'success' (bool)
              'action' (string) => 'state' (string)
              'IP' (string) => 'ip' (string) -> need to convert
              'UA' (string) => 'userAgent' (string)
