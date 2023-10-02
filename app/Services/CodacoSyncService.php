@@ -15,7 +15,7 @@ class CodacoSyncService {
              'time' (string) => 'time' (timestamp) -> need to conver to unix timestamp
              'success' (bool) => 'success' (bool)
              'action' (string) => 'state' (string)
-             'IP' (string) => 'ip' (string) -> need to convert
+             'ip' (string) => 'ip' (string) -> need to convert
              'UA' (string) => 'userAgent' (string)
     */
 
