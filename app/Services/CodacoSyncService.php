@@ -7,6 +7,18 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class CodacoSyncService {
 
+    /**
+        DEFINED DATA MAP (structure):
+              THEIR COLUMN => OUR COLUMN
+             'id' (int)  => 'id' (int)             
+             'hitID' (int)  => 'attemptId' (int)
+             'ctime' (string) => 'time' (timestamp) -> need to conver to unix timestamp
+             'fail' (bool) => 'success' (bool) -> need to convert 1 to 0 and vice versa
+             'action' (string) => 'state' (string)
+             'IP' (string) => 'ip' (string) -> need to convert
+             'UA' (string) => 'userAgent' (string)
+    */
+
     use InteractsWithIO;
     protected $connector;
 
