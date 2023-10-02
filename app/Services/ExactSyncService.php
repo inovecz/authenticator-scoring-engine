@@ -5,6 +5,18 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ExactSyncService {
 
+    /**
+        DEFINED DATA MAP (structure):
+              THEIR COLUMN => OUR COLUMN
+             'id' (int)  => 'id' (int)             
+             'attemptId' (int)  => 'attemptId' (int)
+             'time' (timestamp) => 'time' (timestamp) 
+             'fail' (bool) => 'success' (bool) -> need to switch 1 to 0 and vice versa
+             'state' (string) => 'state' (string)
+             'ip' (string) => 'ip' (string)
+             'userAgent' (string) => 'userAgent' (string)
+    */
+    
     use InteractsWithIO;
 
     protected $output;
