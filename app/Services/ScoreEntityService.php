@@ -100,9 +100,9 @@ class ScoreEntityService extends ScoreService
         $sameUserAgentAttempts = $loginAttempts->filter(fn(LoginAttempt $attempt) => $attempt->userAgentComposite === $currentLoginData['device'].$currentLoginData['os'].$currentLoginData['browser']);
         $userAgentLocal = $this->calculateByML($sameUserAgentAttempts);
 
-        $entityScore = weighted_average([$ipEntity, $locationEntity, $mouseEntity, $timerEntity, $userAgentLocal], [18.75, 18.75, 18.75, 18.75, 25]);
+        $entityScore = weighted_average([$ipEntity, $locationEntity, $mouseEntity, $timerEntity, $userAgentLocal], [60, 10, 10, 10, 10]);
 
-        $totalScore = weighted_average([$globalScore, $entityScore], [40, 60]);
+        $totalScore = weighted_average([$globalScore, $entityScore], [30, 70]);
 
         $maxScore = $this->getMethodMaxScore(__FUNCTION__);
         return (int) ((1 - $totalScore) * $maxScore);
